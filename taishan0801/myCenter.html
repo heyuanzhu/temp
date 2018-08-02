@@ -1,0 +1,232 @@
+<!DOCTYPE html><html id="all"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=750,user-scalable=no">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+<link rel="stylesheet" type="text/css" href="./css/percenternew.css?v=version">
+
+<script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+<script type="text/javascript" src="./js/jquery.eraser.js?v=version"></script>
+<script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+
+<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/jquery.validate.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/jquery.validate.extends.js?v=version"></script>
+
+<script type="text/javascript" src="./js/ys.js?v=version"></script>
+<script type="text/javascript" src="js/asia.js?v=version"></script>
+<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=version"></script>
+<script type="text/javascript" src="js/util.js?v=version"></script>
+<style>
+	
+</style>
+<title name="个人中心"></title>
+<script>
+	$(document).ready(function(){
+		if (isFrame()) {
+			return;//activity-utils.js
+		}
+		//$.activity.settings.devModel = true;
+
+		var levCurLine = $('.lev-line--active');
+		var levLineW = $('.lev-line').width(); 
+		console.log(levLineW);
+		var activityId = $('#activityId').val();
+		var point;
+		// 排行
+		/* $.activity.loadRanking({
+			data:{
+				'activityId' : activityId
+			},
+			sucFunc : function(datas){
+				console.log(datas);
+				var sort = datas.sort;
+				var count = datas.count;
+				$('.code-num').html(count + '次');
+				$('.code-ranking').html(sort + '名');
+
+				if(sort >= 1 && sort <= 777){
+					point = 5;  // 钻石
+				}else if(sort >= 768 && sort <= 5000){
+					point = 4; //铂金		 
+				}else if(sort >= 5001 && sort <= 20000){
+					point = 3; //黄金	
+				}else if(sort >= 20001 && sort <= 100000){
+					point = 2; //白银	
+				}else if( sort > 100000){
+					point = 1;  // 青铜
+				}
+
+				switch(point){
+					case 1:    //铜牌
+						levCurLine.width(levLineW/5 - 70);
+						break;
+					case 2:  //银牌
+						levCurLine.width(levLineW/4);
+						break;
+					case 3:  //金牌
+						levCurLine.width(levLineW/3 + 75);
+						break;
+					case 4:  //钻石
+						levCurLine.width(levLineW/2 + 110);
+						break; 
+					case 5:  //皇冠
+						levCurLine.width(levLineW/1);
+						break;
+				}
+				
+			
+				
+			}
+		}); */
+
+			
+		// 加载用户信息
+		$.activity.loadRegisterInfo({
+			sucFunc : function(datas){
+				var ptoto = datas.activityRegister.wxHeadUrl;
+				var name =  datas.activityRegister.wxNick
+
+				$('#headPhoto').attr('src',ptoto);
+				$('#nickname').text(name);
+			}
+		});
+
+		// 我的红包跳转
+		$('.btn_topw img').eq(0).on('click',function(){
+			location.href = "myredpag.html?timer=" + new Date().getTime();
+		});
+
+		//我的积分分跳转
+		$('.btn_topw img').eq(1).on('click',function(){
+			location.href = "myJf.html?timer=" + new Date().getTime();
+		});
+
+		//我的奖品跳转
+		$('.myprize').on('click',function(){
+			location.href = "myLottery.html?timer=" + new Date().getTime();
+		});
+
+		//我的信息跳转
+		$('.my_msg').on('click',function(){
+			location.href = "my-info.html?timer=" +　new Date().getTime();
+		});
+
+		//活动规则
+		$('.my_rul').on('click',function(){
+			location.href = 'rule.html';
+		});
+
+		//积分商城跳转
+		$('.one_1').on('click',function(){
+			window.location.href = 'http://1kx.me/j/dr';　//http://www.1shang.com/jf-mall/95/index.html
+		});
+
+		//积分互动跳转
+		$('.one_2').on('click',function(){
+			alert('请到积分商城参与活动');
+		});
+
+		//排上榜跳转
+		$('.one_3').on('click',function(){
+			//alert("功能正在开发中,敬请期待哟~");
+			location.href = 'rank.html?v=version';
+		});
+
+		//会员注册跳转
+		$('.list_three').on('click',function(){
+			location.href = 'club.html?timer="' + new Date().getTime();
+		});
+
+	});
+</script>
+</head>
+<body marginwidth="0" marginheight="0">
+	<input id="activityId" type="hidden" value="781">
+	<div class="container" style="overflow: visible;">
+		<div class="con">
+			<div class="topwarp">
+				<ul class="ul_permsg">
+					<li>
+						<div class="pphoto">
+							<!--头像-->
+							<div class="warpphoto">
+								<img class="perphoto" id="headPhoto" src="images/baoxiang_03.png">
+							</div>
+
+						</div>
+					</li>
+					<li><span id="nickname">我的昵称</span></li>
+				</ul>
+				
+			</div>
+			<div class="level-info none">
+				<div class="level-box">
+					<img class="lev-img" src="images/level.png">
+					<div class="lev-line"></div>
+					<div class="lev-line--active"></div>
+					<img class="jt" src="images/jt.png">
+				</div>
+				<div class="info-sub">
+					<table class="info-sub-table">
+						<tbody>
+							<tr>
+								<td>
+									<span><span class="leb">我的扫码次数:</span><strong class="code-num"></strong></span>
+								</td>
+								<td>
+									<span><span class="leb">我的扫码排名:</span><strong class="code-ranking"></strong></span>
+								</td>
+								<td>
+									<a class="gl-btn" href="plan.html?v=version">会员攻略</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					
+					
+				</div>
+			</div>
+			<div class="warp_ls">
+				<div class="btn_topw">
+					<img src="images/btn_n1_03.png"> <img src="images/btn_n2_05.png">
+				</div>
+				<div class="list_one">
+					<div class="myprize"></div>
+					<div class="msg_rul">
+						<div class="my_msg"></div>
+						<div class="my_rul"></div>
+					</div>
+				</div>
+				<div class="list_two">
+					<div class="one_1"></div>
+					<div class="one_2"></div>
+					<div class="one_3"></div>
+					<!--<div class="one_3" onclick="showRank()"></div>-->
+				
+				</div>
+				<div class="list_three none">
+					
+				</div>
+			</div>
+
+			<div class="bottom_foot">
+				<ul class="footlu">
+					<li><a href="tel:4000407999">400-0407-999</a></li>
+					<li>一个电话鲜活到家</li>
+				</ul>
+			</div>
+		</div>
+
+
+	</div>
+
+
+</body></html>

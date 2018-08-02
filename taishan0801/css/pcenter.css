@@ -1,0 +1,115 @@
+.container{
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background: #FFFFFF;
+	background:#fec700;
+}
+.top_warp{
+	height: 338px;
+	width: 750px;
+	background:#fff url(../images/top_bgts_02.jpg) no-repeat;
+	overflow: hidden;
+}
+.center_body{
+	width: 750px;
+	min-height: 693px;
+	background:url(../images/center_bodybg_03.jpg) no-repeat top;
+}
+.pphoto{
+	height: 144px;
+	width: 144px;
+	border: 7px solid #fec400;
+	border-radius: 144px;
+	margin: auto;
+	position: relative;
+	
+}
+.warpphoto{
+	height: 144px;
+	width: 144px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 144px;
+	overflow: hidden;
+}
+.perphoto{
+	height: 144px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.ul_permsg li:first-child{margin-top: 30px;}
+.ul_permsg li:last-child{text-align: center;font-size: 26px;font-weight: 700;color: #fec400;margin-top: 15px;}
+.sex{
+	position: absolute;
+	left:-90px;
+	top:56px;
+}
+.age{
+	font-size: 26px;
+	color: #53a7f3;
+	font-weight: 700;
+}
+.listaddress{
+	width: 660px;
+	margin: auto;
+	overflow: hidden;
+}
+.listul_msg {margin-top: 60px;}
+.listul_msg li{
+	height: 35px;
+	margin-bottom: 60px;
+	color: #813B0B;
+	font-size: 26px;
+	padding-left:55px;
+	padding-right: 50px;
+	line-height: 35px;
+}
+.listul_msg li.ccunt{
+	background: url(../images/icon_ts_03.png) no-repeat 0px 0px;
+}
+.listul_msg li.name{
+	background: url(../images/icon_ts_03.png) no-repeat 0px -97px,url(../images/cionright_06.png) no-repeat right;
+}
+.listul_msg li.sexli{
+	background: url(../images/icon_ts_03.png) no-repeat 0px -197px,url(../images/cionright_06.png) no-repeat right;
+}
+.listul_msg li.sexlinoseconbg{
+	background: url(../images/icon_ts_03.png) no-repeat 0px -197px;
+}
+.listul_msg li.nlage{
+	background: url(../images/icon_ts_03.png) no-repeat 0px -292px,url(../images/cionright_06.png) no-repeat right;
+}
+.listul_msg li.lxnum{
+	background: url(../images/icon_ts_03.png) no-repeat 0px -396px,url(../images/cionright_06.png) no-repeat right;
+}
+.listul_msg li.sjadd{
+	background: url(../images/icon_ts_03.png) no-repeat 0px -491px,url(../images/cionright_06.png) no-repeat right;
+}
+.listul_msg li.sjaddnoseconbg{
+	background: url(../images/icon_ts_03.png) no-repeat 0px -491px;
+}
+.listul_msg li .content{
+	float: right;
+	height: 35px;
+	max-width: 390px;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	/*鎺у埗鍦ㄧ鍑犺寮� 瓒呭嚭鍔犵渷鐣ュ彿*/
+	-webkit-box-orient: vertical;
+	font-size: 26px;
+	color: #FFFFFF;
+	font-weight: 500;
+	text-align: right;
+}
+

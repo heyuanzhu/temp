@@ -1,0 +1,86 @@
+.container{
+    width:100%;
+    height:100%;
+    background: url("../images/bg1.jpg") no-repeat top center;
+    background-size: 100% 100%;
+}
+.con{
+    overflow: hidden;
+}
+.form-container{
+    width:100%;
+    margin:155px auto 0;
+}
+#address{
+    font-size:30px;
+}
+#address li{
+    padding:30px 0;
+    border-bottom:1px dashed #813b0b;
+}
+#address li.err{
+    padding:0;
+}
+#address li.selects{
+    position: relative;
+}
+#address li img.s1,#address li img.s2,#address li img.s3{
+    position: absolute;
+    top: 45px;
+}
+#address li img.s1{
+    left: 300px;
+}
+#address li img.s2{
+    left: 482px;
+}
+#address li img.s3{
+    left: 663px;
+}
+#address li label{
+    color: #813b0b;
+    margin-left:38px;
+    vertical-align: sub;
+}
+#address select{
+    height:40px;
+    width:165px;
+    text-indent:25px;
+    font-size:27px;
+    color:#b3b3b3;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    line-height:38px;
+    display: inline-block;
+    margin-left: 9px;
+}
+#address select,#address input{
+    border-radius:15px;
+    border:2px solid #813b0b;
+}
+#address li.detail-address input{
+    width:412px;
+    height:40px;
+}
+#address p.err-msg {
+    text-align: center;
+    color: #ff1d25;
+    font-size: 27px;
+    margin-top: 23px;
+}
+#address li.des,#address li.sub-btn,#address li.err{
+    border:0;
+}
+#address li.des{
+    margin-left:38px;
+    color:#af4a2e;
+    font-size:21px;
+}
+#address li.sub-btn{
+    text-align: center;
+}
+#address button{
+    background-color: transparent;
+    border:0;
+}

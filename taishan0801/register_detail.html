@@ -1,0 +1,139 @@
+<!DOCTYPE html><html id="all"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=750,user-scalable=no">
+<meta content="telephone=no" name="format-detection">
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+<link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+<link rel="stylesheet" type="text/css" href="./css/percenternew.css?v=version">
+
+<script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+<script type="text/javascript" src="./js/jquery.eraser.js?v=version"></script>
+<script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+
+<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8" ></script>
+<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/jquery.validate.js?v=version"></script>
+<script type="text/javascript" src="../js/activity/jquery.validate.extends.js?v=version"></script>
+
+<script type="text/javascript" src="./js/ys.js?v=version"></script>
+<script type="text/javascript" src="js/asia.js?v=version"></script>
+<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=version"></script>
+<style>
+	
+</style>
+<title></title>
+<script>
+	$(document).ready(function(){
+		if (isFrame()) {
+			return;//activity-utils.js
+		}
+		
+		if(!window.name){
+			var str = Math.random().toString(36).substr(2);//随机字符串       
+			if(window.location.href.indexOf("?")==-1){
+				window.location.href += '?S='+ str;//兼容微信浏览器刷新
+			}else{
+				window.location.href += '&S='+ str;//兼容微信浏览器刷新
+			}
+			window.name = 'isreload';
+		}
+		
+		// 加载用户信息
+		$.activity.loadRegisterInfo({
+			sucFunc : function(datas){
+				//alert(datas.activityRegister.createTime);
+				$.ajax({
+		    		url:"http://event.1shang.com/links-software-web-activity/activity/getRegisterBill",
+		    		cache:false,
+		    		data:{"activityId":781},
+		    		dataType:"json",
+		    		success:function(result){
+		    			//alert(JSON.stringify(result));
+		    			//第一次参与时间 2016-11-30 16:36:11
+						//var first_lottery_time=result.datas.activityRegisterBill.firstLotteryTime;
+		    			var first_lottery_time="";
+		    			var first_lottery_price_OWN_WX="";
+		    			var max_lottery_count_date_one_day="";
+		    			var max_lottery_count_num_one_day="";
+		    			var last_lottery_time_one_day="";
+		    			var lotteryCount="";
+		    			if(lotteryCount=datas.activityRegister.lotteryCount>0){
+		    				
+							first_lottery_time=datas.activityRegister.createTime;
+							if(!first_lottery_time){
+								first_lottery_time="";
+							}else{
+								//first_lottery_time=first_lottery_time.substring(0,4)+"年"+first_lottery_time.substring(4,6)+"月"+first_lottery_time.substring(6,8)+"日";
+								first_lottery_time=first_lottery_time.substring(0,4)+"年"+first_lottery_time.substring(5,7)+"月"+first_lottery_time.substring(8,10)+"日";
+							}
+							
+							//个人第一次扫码金额
+							first_lottery_price_OWN_WX=result.datas.activityRegisterBill.firstLotteryPriceOwnWx;
+							if(!first_lottery_price_OWN_WX){
+								first_lottery_price_OWN_WX="";
+							}
+							
+							//个人单日扫码最多次数的日期
+							max_lottery_count_date_one_day=result.datas.activityRegisterBill.maxLotteryCountDateOneDay;
+							if(!max_lottery_count_date_one_day){
+								max_lottery_count_date_one_day="";
+							}else{
+								max_lottery_count_date_one_day=max_lottery_count_date_one_day.substring(0,4)+"年"+max_lottery_count_date_one_day.substring(4,6)+"月"+max_lottery_count_date_one_day.substring(6,8)+"日";
+							}
+							//个人单日扫码最多次数
+							max_lottery_count_num_one_day=result.datas.activityRegisterBill.maxLotteryCountNumOneDay;
+							if(!max_lottery_count_num_one_day){
+								max_lottery_count_num_one_day="";
+							}
+							if(max_lottery_count_num_one_day==''){
+								max_lottery_count_num_one_day=='1';
+							}
+							if(max_lottery_count_num_one_day=='1'){
+								max_lottery_count_date_one_day=first_lottery_time;
+							}
+							//个人单日扫码最晚时间
+							last_lottery_time_one_day=result.datas.activityRegisterBill.lastLotteryTimeOneDay;
+							if(!last_lottery_time_one_day){
+								last_lottery_time_one_day="";
+							}else{
+								last_lottery_time_one_day=last_lottery_time_one_day.substring(last_lottery_time_one_day.length-14);
+								last_lottery_time_one_day=last_lottery_time_one_day.substring(0,4)+"年"+last_lottery_time_one_day.substring(4,6)+"月"+last_lottery_time_one_day.substring(6,8)+"日，"+last_lottery_time_one_day.substring(8,10)+"点"+last_lottery_time_one_day.substring(10,12)+"分";
+							}
+							if(last_lottery_time_one_day==""){
+								last_lottery_time_one_day=first_lottery_time+"，"+datas.activityRegister.createTime.substring(11,13)+"点"+datas.activityRegister.createTime.substring(14,16)+"分"
+							}
+							
+							//个人累计扫码总次数
+							lotteryCount=datas.activityRegister.lotteryCount;
+							if(!lotteryCount){
+								lotteryCount="";
+							}
+		    			}
+						location.href = "http://ia.mission-sd.com/v3/idea/sTic5jE8"
+							+"?val1="+encodeURI(first_lottery_time)
+							+"&val2="+encodeURI(first_lottery_price_OWN_WX)
+							+"&val3="+encodeURI(max_lottery_count_date_one_day)
+							+"&val4="+encodeURI(max_lottery_count_num_one_day)
+							+"&val5="+encodeURI(last_lottery_time_one_day)
+							+"&val6="+encodeURI(lotteryCount);
+		        	}
+		    	});
+				
+			}
+		});
+
+	});
+</script>
+</head>
+<body marginwidth="0" marginheight="0">
+	<input id="activityId" type="hidden" value="781">
+	
+
+</body>
+</html>

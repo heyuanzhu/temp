@@ -1,0 +1,163 @@
+.container{
+	width: 100%;
+	height: 100%;
+	background: #fff url(../images/rank/7.png) no-repeat;
+	background-size:100% 100%;
+	overflow: hidden;
+}
+.con{
+	width: 100%;
+	height: 100%;
+}
+.jie{
+	width: 20.4%;
+	position: absolute;
+	z-index: 1;
+	right: 0;
+	top: 0;
+}
+.logo{
+	width: 32%;
+	position: absolute;
+	z-index: 2;
+	right: 7%;
+	top: 1%;
+}
+.to-rule{
+	width: 20%;
+	height: 6%;
+	position: absolute;
+	right: 4%;
+	top: 8.5%;
+	z-index: 99;
+	background: url(../images/rank/2.png) no-repeat 50% 50%;
+	background-size: contain;
+}
+.banner{
+	width: 100%;
+	position: absolute;
+	z-index: 2;
+	left: 0;
+	top: 1%;
+}
+.rank-box{
+	width: 92.4%;
+	height: 62%;
+	position: absolute;
+	left: 3.8%;
+	top: 35%;
+	z-index: 90;
+	font-size: 0;
+	line-height: 0;
+}
+.total-rank{
+	width: 100%;
+	margin: 0 auto;
+	height: 70px;
+	background: url(../images/rank/3.png) no-repeat 50% 50%;
+	background-size: 100% 100%;
+	color: #000;
+	font-size: 4vw;
+	line-height: 70px;
+	text-align: center;
+}
+.table-title td{
+	vertical-align: middle;
+	background: url(../images/rank/4.png) no-repeat 50% 50%;
+	background-size: contain;
+	text-align: center;
+	padding: 20px 0 32px;
+}
+.menu{
+	width: 70%;
+	max-width: 137px;
+	vertical-align: middle;
+}
+.list-container{
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 5px;
+	position: relative;
+}
+.list-bg{
+	width: 100%;
+	position: relative;
+	z-index: 1;
+}
+.list-body{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+}
+.city-box{
+	width: 98%;
+	margin: 0 auto;
+	text-align: center;
+	color: #fff;
+	font-size: 4vw;
+	line-height: 130%;
+	padding: 5px 0;
+	border-bottom: 1px solid #fff;
+}
+.city-box span{
+	width: 20%;
+	display: inline-block;
+	text-align: center;
+	margin: 0 2%;
+}
+.list-title{
+	width: 98%;
+	margin: 0 auto;
+	border-bottom: 1px solid #fff;
+}
+.list-title span{
+	display: inline-block;
+	width: 25%;
+	text-align: center;
+	color: #fffdc9;
+	font-size: 3vw;
+	padding: 10px 0;
+	line-height: 130%;
+}
+.list-ul{
+	width: 98%;
+	margin: 0 auto;
+	margin-top: 1%;
+	height: 78%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.list-ul li{
+	border-bottom: 1px solid #fff;
+}
+.list-ul li span{
+	display: inline-block;
+	width: 25%;
+	text-align: center;
+	color: #fff;
+	font-size: 4vw;
+	padding: 10px 0;
+	line-height: 130%;
+	vertical-align: middle;
+}
+.uheader{
+	width: 30%;
+	border-radius: 50%;
+	vertical-align: middle;
+}
+.btn-more{
+	width: 98%;
+	margin: 0 auto;
+	margin-top: 5%;
+	padding: 10px 0;
+	font-size: 4vw;
+	text-align: center;
+	color: #fff;
+}
+
+#lists0,#lists1,#lists2{
+	display: none;
+}

@@ -1,0 +1,339 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/index.css?v=version">
+	<!--
+    <script type="text/javascript" src="./js/iscroll-no3d.js?t=1489683928914"></script>
+    <script type="text/javascript" src="./js/iscroll-probe.js?t=1489683928914"></script>
+    <script type="text/javascript" src="./js/loadMore.js?t=1489683928914"></script>
+	-->
+
+	<script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+	<script type="text/javascript" src="./js/jquery.eraser.js?v=version"></script>
+	<script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+
+	<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.extends.js?v=version"></script>
+
+
+
+  <script type="text/javascript" src="./js/ys.js?v=version"></script>
+  <script type="text/javascript" src="js/shake.js?v=version"></script>
+  <!--
+  <script type="text/javascript" src="js/asia.js?v=version"></script>
+  -->
+
+  <!--
+	<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=version"></script>
+  -->
+
+  <title name="场景码抽奖"></title>
+  <style>
+    .code_ts{
+      font-weight: bold;
+      font-size:32px;
+    }
+  </style>
+  <script>
+
+  //判断弹窗的全局变量
+    $(function(){
+    if(isFrame()){
+      $('.warpcode').show();
+      return;
+    } ;//activity-utils.js
+
+    
+    weixinConfig({
+      debug:false,
+      getLocation:true,
+      loopLocation : true,
+      getLocationFail:function(msg){
+        alert('请在设置中设置微信获取位置权限');
+      }
+    });
+
+
+    var flag = false;
+    var tCode = null;
+    var yyNum = 0;
+
+    var yyTimer = null;
+    var checkTimer = null;
+
+    var audio = document.getElementById('sound');
+    checkLocation();
+    
+    document.addEventListener("WeixinJSBridgeReady", function () {
+
+      var myShakeEvent = new Shake({
+        threshold: 6, //摇动阀值控制摇动的 力度
+      });
+      myShakeEvent.start();
+
+      window.addEventListener('shake', function(){
+        console.log('hhhhhhh');
+        console.log(flag);
+
+        if(!flag){
+          if(yyState){  
+            getPrize();  
+            clearInterval(yyTimer);
+            flag = true;
+
+          }else{
+            if(yyNum == 3){
+              window.location.reload();
+            }
+          }
+          
+          
+          audio.play();
+          $('.shou').addClass('gogo');
+          yyNum++;  
+          
+          yyTimer = setTimeout(function(){
+            $('.shou').removeClass('gogo');
+            if(!yyState){
+              flag = false
+            }
+            
+          },3000);  
+        };
+
+        flag = true;  
+          
+      }, false);
+
+      audio.play();
+      audio.pause();
+
+    });
+
+
+
+	  function checkLocation(){
+		  $.activity.getLocation({
+			  sucFunc : function(datas){
+          console.log(datas);
+				  var longitude = datas.longitude;
+				  var latitude = datas.latitude;
+				  if(longitude && latitude){
+					  if(datas.gpsCity == '沧州市'){
+						  $('.warpcode .code').attr('src','images/ewm_cz.png');
+					  }else if(datas.gpsCity == '济南市'){
+						  $('.warpcode .code').attr('src','images/ewm_jn.png');
+					  }else if(datas.gpsCity == '廊坊市'){
+						  $('.warpcode .code').attr('src','images/ewm_lf.png');
+					  }else if(datas.gpsCity == '商丘市'){
+						  $('.warpcode .code').attr('src','images/ewm_sq.png');
+					  }else if(datas.gpsCity == '徐州市'){
+						  $('.warpcode .code').attr('src','images/ewm_xz.png');
+					  }else if(datas.gpsCity == '泰安市'){
+						  $('.warpcode .code').attr('src','images/ewm_ta.png');
+					  }else if(/黑龙江/.test(datas.gpsProvince)){
+						  $('.warpcode .code').attr('src','images/ewm_hlj.png');
+					  }
+
+            yyState = true; 
+            clearInterval(checkTimer);
+    
+				  }else{
+            if(!yyState){
+                checkTimer = setInterval(function(){
+                  checkLocation();//重新检查
+                },1000);
+            }else{
+              clearInterval(checkTimer);
+            }
+          }
+
+			  },
+			  errFunc : function(message,code,datas){
+				  alert('可能位置信号不好，换个地方试试看');
+			  }
+
+
+
+		  });
+	  }
+
+
+
+    $('.warpcode').hide();
+
+  
+
+    /*   抽奖获取      */
+    function getPrize(){
+      //参与活动
+      //console.log('函数进来');
+      $.activity.lottery({
+        data : {
+          activityId : $("#activityId").val(),//活动id
+          activityEntryCode : 'scene',//动作代号
+          code : getParam("code")
+        },
+        sucFunc : function(datas){
+          //flag = false;
+          //console.log('ok');
+          var activityLotteryId = datas.activityLotteryId;
+          var activityPrizePackage = datas.activityPrizePackage;
+          if(activityPrizePackage){//中奖
+
+            tCode = setTimeout(function(){
+              $('.warpcode').show();
+              $('#tdj').hide();
+            },3000);
+
+            $('.prize span').html(activityPrizePackage);
+
+
+            setTimeout(function(){
+              $('.win-result').show();
+            },500);
+
+            
+            console.log(datas);
+            //location.href='myLottery.html?activityLotteryId='+activityLotteryId;
+           
+
+
+          }else{
+            location.href='notWin.html?v=version&errorCode=noprize';
+            //  已核销  （显示排行榜）
+            //$('.ranking').show();
+
+          }
+
+
+        },
+        errFunc : function(msg,errorCode,datas){
+          console.log('errFunc');
+          var datas = datas || {};
+          var count = datas.lotteryCountDayLimit || 50;
+
+          //错误提示
+          var errorCodes = {
+            'E00603111':'此二维码已经被扫过了',//串码使用次数已达上限
+            'E00603112':'此二维码已经被扫过了',//串码已经被使用
+            'E00603113':'您参与次数已达上限',
+            'E00608026':'亲，此二维码已关闭。产品过期后，瓶盖二维码随即关闭哦。',
+            /*'E00603114':'<p>每日每人最多参与'+count+'次</p><p>请明天再来哦~</p>'*/
+          };
+          if(errorCodes[errorCode]){
+            //params = '&errorCode='+errorCode;
+            //if(datas.firstTime) params = params + '&firstTime='+datas.firstTime;
+            //location.href='notWin.html?v=version&dayLimit='+datas.lotteryCountDayLimit+params;
+            location.href='notWin.html?v=version';
+          }
+            return false;
+        },
+        error : function(e){
+          console.log('error');
+          console.log(e);
+        },
+        complete : function(){
+          setTimeout(function(){canLottery = true},2000);
+        }
+      });
+    }
+
+
+
+    //  活动规则
+    $('.gz_btn').on('click',function(){
+      location.href='rule.html';
+    });
+
+    // 关闭二维码弹层
+    $('.closecode').on('click',function(){
+      $('.warpcode').hide();
+      clearInterval(tCode);
+    });
+
+
+    
+
+  });
+
+
+  </script>
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="781"> 
+<audio id="sound" src="sound/shake_sound.mp3"></audio>
+	<div class="container" style="overflow: visible;"> 
+		<div class="asiawarp index_warp" style="transform: scale(0.426667, 0.426667); transform-origin: 0px 0px 0px; width: 750px; overflow: scroll; min-height: 0px;"> <!--  style="transform: scale(0.426667, 0.426667); transform-origin: 0px 0px 0px; width: 640px; overflow: scroll; min-height: 0px;" -->
+      <div class="topbar">
+          <div class="logo">
+            <img src="images/yy/logo.png">
+          </div>
+          <a class="rule-btn" href="rule.html"></a>
+      </div>
+     
+      <div class="center mt15">
+          <img class="kv" src="images/yy/index_kv.png" links-editor-background-image=""  links-editor="links-editor-upload-file" links-editor-title="KV图片">
+      </div>
+      
+      <div class="move-box">
+        	<img class="bt" src="images/yy/bdz.png" links-editor="links-editor-upload-file" links-editor-title="摇一摇手图" alt="">
+					<img class="shou" src="images/yy/hand.png" links-editor="links-editor-upload-file" links-editor-title="摇一摇手图" alt="">
+					<img class="quan" src="images/yy/zp.png" links-editor="links-editor-upload-file" links-editor-title="摇一摇背景" alt="">
+					<img class="ht" src="images/yy/hdz.png" links-editor="links-editor-upload-file" links-editor-title="摇一摇标语" alt="">
+				</div>
+		       
+			<!--二维码-->
+			<div class="cover warpcode" style="display: block;">
+				<div class="warp_code">
+					<div class="closegz closecode"><img src="images/close_03.png"></div>
+
+					<div class="code_m">
+						<!-- <img class="code" src="images/code_n.png"> -->
+						<img class="code" style="top:-197px" src="images/code_2.png" links-editor-background-image="" links-editor="links-editor-upload-file" links-editor-title="二维码图片">
+					</div>
+          <p class="code_ts" style="margin-top:-10px;">长按并识别以上二维码</p>
+          <p class="code_ts">进入“个人中心”领取红包</p>
+				</div>
+			</div>
+
+				<!--覆层loading-->
+			<div class="covernew gpsload" id="gpsLoad">
+				<div class="loadwarp">
+						<div class="gpsmsg">正在获取GPS信息...</div>
+						<div class="logoing">
+
+						</div>
+				</div>
+			</div>
+
+
+      <div class="win-result none">
+        <div class="hd">
+          <img src="images/yy/zj_tit.png">
+        </div>
+        <div class="bd prize">
+          <span class="">100元</span>
+        </div>
+
+        <img class="pic1" src="images/yy/paper_b.png">
+        <img class="pic2" src="images/yy/paper_f.png">
+      </div>
+
+	</div>
+
+
+</div>
+
+
+</body>
+</html>

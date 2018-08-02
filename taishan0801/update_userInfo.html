@@ -1,0 +1,111 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=yes">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/inputName.css?v=version">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js?v=version"></script>
+    <script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+  	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+    <script type="text/javascript" src="../js/activity/jquery.validate.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/jquery.validate.extends.js?v=version"></script>
+  	<script type="text/javascript" src="js/util.js?v=version"></script>
+    <title name="保存信息"></title>
+    <script>
+      $(document).ready(function(){
+
+        if (isFrame()) {
+  				return;//activity-utils.js
+  			}
+        //保存个人信息   事件
+        $('.input-name button').on('click',function(){
+          saveRealName();
+          $.alert('保存成功');
+        });
+
+        // 加载用户信息
+    		$.activity.loadRegisterInfo({
+    			sucFunc : function(datas){
+            $('#realName').html(datas.activityRegister.wxNick ? datas.activityRegister.wxNick : ""); //真实姓名
+            $('#age').html(datas.activityRegister.age ? datas.activityRegister.wxNick : "");   //年龄
+            $('#phone').html(datas.activityRegister.phone ? datas.activityRegister.wxNick : "");  //联系方式
+    			}
+    		});
+
+
+        // 保存个人信息   请求
+        function saveRealName(item){
+          $.activity.saveRegisterInfo({
+            data : {
+              name : $("#realName").val(),//活动id
+              age : $('#age').val(),//动作代号
+              phone : $('#phone').val()
+            }
+          });
+        }
+
+      });
+    </script>
+
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="781">
+<div class="container" style="overflow: visible;">
+    <div class="con input-name" id="realNameDiv">
+        <div class="form-container">
+        	<div class="info-item">
+	            <input type="text" name="name" id="realName" placeholder="输入真实姓名">
+	            <p class="err-msg" id="nameErr">&nbsp;</p>
+	            <button id="realNameBtn"><img src="./images/save_icon.png"></button>
+          </div>
+        </div>
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+    </div>
+
+    <div class="con input-name" id="ageDiv">
+        <div class="form-container">
+	        <div class="info-item">
+	            <input type="tel" name="age" id="age" placeholder="输入您的年龄">
+	            <p class="err-msg" id="ageErr">&nbsp;</p>
+	            <button id="ageBtn"><img src="./images/save_icon.png"></button>
+	        </div>
+        </div>
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+    </div>
+
+    <div class="con input-name" id="phoneDiv">
+        <div class="form-container">
+	        <div class="info-item" id="">
+	            <input type="tel" name="phone" id="phone" placeholder="输入手机号">
+	            <p class="err-msg" id="phoneErr">&nbsp;</p>
+	            <button id="phoneBtn"><img src="./images/save_icon.png"></button>
+	        </div>
+        </div>
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</body></html>

@@ -1,0 +1,47 @@
+.container{
+    width:100%;
+    height:100%;
+    background: url("../images/bg2.jpg") no-repeat top center;
+    background-size: 100% 100%;
+}
+.con{
+    height:100%;
+    overflow: auto;
+}
+.logistics-container{
+    width:540px;
+    margin:15% auto 0;
+}
+.logistics-container h3 img{
+    display: block;
+}
+.main-con{
+    width:518px;
+    padding:30px 8px 30px;
+    border:2px solid #813b0b;
+    background-color: #fff;
+    border-top:0;
+    /*margin-top:-1px;*/
+    position: relative;
+    z-index:1;
+    top:-1px;
+    border-bottom-right-radius:28px;
+    border-bottom-left-radius:28px;
+}
+.main-con table td{
+    font-size:27px;
+    border-bottom:1px dashed #813b0b;
+    line-height: 50px;
+    padding:10px 0;
+}
+.main-con table td:nth-child(odd){
+    width: 160px;
+    vertical-align: top;
+    text-align: right;
+}
+.main-con table td:nth-child(even){
+    padding-right:25px;
+}
+.main-con table tr:last-child td{
+    border-bottom: 0;
+}

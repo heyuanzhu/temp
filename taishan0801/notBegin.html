@@ -1,0 +1,83 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=yes">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/notStart.css?v=version">
+
+
+	<script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+	<script type="text/javascript" src="./js/jquery.eraser.js?v=version"></script>
+	<script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+
+	<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+
+	<script type="text/javascript" src="./js/ys.js?v=version"></script>
+	<script type="text/javascript" src="js/asia.js?v=version"></script>
+	<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=version"></script>
+
+<!--     <script type="text/javascript" src="js/asia.js?t=1480322014134"></script> -->
+    <title name="活动未开始"></title>
+
+    <style>
+      .main-con{line-height: 63px;font-size: 42px;}
+      .main-con p{line-height: 63px;}
+    </style>
+
+    <script type="text/javascript">
+    $(function(){
+      if (isFrame()) {
+        return;//activity-utils.js
+      }
+      var errorCode = getParam('errorCode');
+      var msg = getParam('msg');
+      var errorCodes = {
+          'E00603111':'您的二维码已经被扫过了',//串码使用次数已达上限
+          'E00603112':'您的二维码已经被扫过了', //串码已经被使用
+          'E00603113':'您参与次数已达上限', //消费者参与次数已达上限
+          'E00608026':'亲，此二维码已关闭。产品过期后，瓶盖二维码随即关闭哦。',
+          'E00603126':'二维码核销次数已达上限',//已达到场景码最大使用次数
+          'E00603127':'亲，此二维码已关闭',//场景码不存在
+          'E00603128':'您已扫过此码。更多福利，请关注山东泰山啤酒有限公司公众号',//总参与次数已达上限
+          'E00603130':'您已扫过此码。更多福利，请关注山东泰山啤酒有限公司公众号'//当天参与次数已达上限
+        };
+
+      if(errorCodes[errorCode]){
+        $('.main-con').html(errorCodes[errorCode]);
+      }
+      else{
+          $('.main-con').html(msg);
+      }
+
+    });
+
+    </script>
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="781">
+<div class="container" style="overflow: visible;">
+    <div class="con not-start">
+        <div class="outer">
+            <div class="main-con">
+                <p>活动尚未开始</p>
+            </div>
+            <img class="sorry" src="./images/not_start.png">
+        </div>
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body></html>

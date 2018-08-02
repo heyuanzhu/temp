@@ -1,0 +1,115 @@
+.container{
+    width:100%;
+    height:100%;
+    background: url("../images/bg2.jpg") no-repeat top center;
+    background-size: 100% 100%;
+}
+.con{
+    height:100%;
+    overflow: auto;
+}
+.logistics-container{
+    width:540px;
+    margin:15% auto 0;
+}
+.logistics-container h3 img{
+    display: block;
+}
+.main-con{
+    width:518px;
+    padding:50px 8px 30px;
+    border:2px solid #813b0b;
+    background-color: #fff;
+    border-top:0;
+
+    position: relative;
+    z-index:1;
+    top:-1px;
+    border-bottom-right-radius:28px;
+    border-bottom-left-radius:28px;
+}
+#logistics{
+    width:497px;
+    margin:0 auto;
+}
+#logistics input,#logistics select{
+    height: 50px;
+    font-size:27px;
+    color: #b3b3b3;
+    border-radius: 15px;
+    border: 2px solid #813b0b;
+    /*vertical-align: top;*/
+}
+#logistics li{
+    margin-bottom:20px;
+}
+#logistics li.selects{
+    position: relative;
+}
+#logistics li img.s1, #logistics li img.s2, #logistics li img.s3 {
+    position: absolute;
+    top: 18px;
+}
+#logistics li img.s1{
+    left:117px;
+}
+#logistics li img.s2{
+    left:287px;
+}
+#logistics li img.s3{
+    left:456px;
+}
+#logistics select {
+    width: 153px;
+    text-indent: 25px;
+    font-size: 27px;
+    color: #b3b3b3;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /*line-height: 38px;*/
+    display: inline-block;
+    margin-left: 10px;
+}
+#logistics select:first-child{
+    margin-left:0;
+}
+#logistics input{
+    width:490px;
+    text-indent:25px;
+    line-height: 40px;
+}
+#logistics p.err-msg {
+    text-align: center;
+    color: #ff1d25;
+    font-size: 27px;
+    margin-top: 23px;
+}
+#logistics .sub-btn{
+    text-align: center;
+    margin-top:30px;
+}
+#logistics button{
+    background-color: transparent;
+    border: 0;
+}
+.bot{
+    width:100%;
+    height:167px;
+    background:url("../images/b_bg.png") no-repeat bottom center;
+    background-size: 100% 100%;
+    position: absolute;
+    bottom: 0;
+    left:0;
+}
+.img-container{
+    width:645px;
+    margin:77px auto 0;
+    overflow: hidden;
+}
+.img-container img:first-child{
+    float: left;
+}
+.img-container img:last-child{
+    float: right;
+}

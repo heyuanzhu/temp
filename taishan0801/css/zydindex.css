@@ -1,0 +1,114 @@
+.container{background: url(../images/ts_bg2.png) no-repeat;background-size:100% 100%;overflow: hidden;height: 100%;width: 100%;}
+.asiawarp{
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+.logo{
+	width: 560px;
+	overflow: hidden;
+	margin: 0 auto;
+	padding-top:35px;
+}
+.zyd_body{
+	width: 540px;
+	height: 920px;
+	margin: 15px auto 0;
+}
+.titzydwarp{
+	height: 194px;
+	width: 538px;
+	background: url(../images/zydtit_03.png) no-repeat;
+}
+.ressbody{
+	width: 538px;
+	height: 381px;
+	background: url(../images/body_zyd_05.png) no-repeat;
+	overflow: hidden;
+}
+.msg_address{
+	height: 320px;
+	width: 472px;
+	margin: 40px auto 0px;
+}
+.btn_zyd{
+	height: 40px;
+	width: 200px;
+	border-radius: 40px;
+	border: 1px solid #813b09;
+	background: #d36440;
+	font-size: 26px;
+	font-weight: 700;
+	color: #fffdc9;
+	text-align: center;
+	line-height: 40px;
+}
+.xx_dz{
+	max-height: 100px;
+	font-size: 24px;
+	color: #813b0b;
+	padding-left:35px;
+	line-height: 40px;
+	border-bottom:1px dashed #813b0b;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;-webkit-line-clamp: 2;/*控制在第几行开始 超出加省略号*/ 
+	-webkit-box-orient: vertical;
+	background: url(../images/dzicon_07.png) no-repeat;
+	margin-top: 10px;
+	padding-bottom:5px
+}
+.btn_mdjs{
+	height: 40px;
+	width: 160px;
+	border-radius: 40px;
+	border: 1px solid #813b09;
+	background: #e7a24c;
+	font-size: 26px;
+	font-weight: 700;
+	color: #fffdc9;
+	text-align: center;
+	line-height: 40px;
+	margin-top: 10px;
+}
+.mdjs_body{
+	width: 425px;
+	height: 129px;
+	margin: 16px auto 0;
+	overflow-y: auto;
+	color: #813b0b;
+	font-size: 24px;
+	line-height: 35px;
+}
+.mapbody{
+	height: 325px;
+	width: 100%;
+	border-radius: 20px;
+	background: #fffdc9;
+	border: 2px solid #813b09;
+	margin-top: 18px;
+}
+.map_warp{
+	width: 470px;
+	height: 265px;
+	margin: 26px auto 0;
+}
+.btn_map{
+	height: 40px;
+	width: 160px;
+	border-radius: 40px;
+	border: 1px solid #813b09;
+	background: #e4ca59;
+	font-size: 26px;
+	font-weight: 700;
+	color: #fffdc9;
+	text-align: center;
+	line-height: 40px;
+}
+.bddtu{
+	height: 203px;
+	width: 100%;
+	border-radius: 20px;
+	border: 1px solid #813b09;
+	margin-top: 15px;
+}

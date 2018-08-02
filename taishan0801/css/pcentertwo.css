@@ -1,0 +1,115 @@
+.container{
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background: #FFFFFF;
+	background:#af4a2e;
+}
+.top_warp{
+	height: 364px;
+	width: 750px;
+	background: url(../images/tstopbg_02.jpg) no-repeat;
+	overflow: hidden;
+}
+.center_body{
+	width: 750px;
+	min-height: 693px;
+	background:#af4a2e;
+	overflow: hidden;
+}
+.pphoto{
+	height: 144px;
+	width: 144px;
+	border: 7px solid #fd9b00;
+	border-radius: 144px;
+	margin: auto;
+	position: relative;
+	
+}
+.warpphoto{
+	height: 144px;
+	width: 144px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 144px;
+	overflow: hidden;
+}
+.perphoto{
+	height: 144px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.ul_permsg li:first-child{margin-top: 30px;}
+.ul_permsg li:last-child{text-align: center;font-size: 26px;font-weight: 700;color: #fd9b00;margin-top: 15px;}
+.btn_warp{
+	overflow: hidden;
+	margin-top: 55px;
+}
+.btn_warp .myprizebtn{
+	float: left;
+    height: 70px;
+    width: 197px;
+    margin-left: 140px;
+    background: none;
+}
+.btn_warp .myjfbtn{
+	float: right;
+    height: 70px;
+    width: 197px;
+    margin-right: 116px;
+    background: none;
+}
+.tslist{
+	width: 630px;
+	margin: 90px auto 0px;
+}
+.tslist li{
+	display: inline-block;
+	width: 203px;
+	height: 288px;
+	border-radius: 10px;
+	border: 1px solid #CCCCCC;
+	background: #FFFFFF;
+	text-align: center;
+}
+.tslist li img{
+	margin-top: 46px;
+}
+.tslist li p{
+	color: #999999;
+	font-size: 26px;
+	margin-top: 5px;
+}
+.bottom_foot{
+	height: 86px;
+	background: #fec700 url(../images/tslogo_15.png) no-repeat 60px 14px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+}
+.footlu{
+	float: right;
+	margin-top: 16px;
+	margin-right: 60px;
+	text-align: center;
+}
+.footlu li:first-child{
+	font-size: 28px;
+	font-weight: 900;
+	color: #FFFFFF;
+	letter-spacing: 2px;
+}
+.footlu li:last-child{
+	font-size: 18px;
+	color: #FFFFFF;
+	letter-spacing: 4px;
+}

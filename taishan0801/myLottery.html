@@ -1,0 +1,428 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/myPrizes.css?v=version">
+
+    <script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+	<script type="text/javascript" src="./js/jquery.eraser.js?v=version"></script>
+	<script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+
+	<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+
+	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.extends.js?v=version"></script>
+
+	<script type="text/javascript" src="./js/ys.js?v=version"></script>
+	<script type="text/javascript" src="js/asia.js?v=version"></script>
+	<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=version"></script>
+    <script type="text/javascript" src="js/qrcode.min.js?v=version"></script>
+    <script type="text/javascript" src="js/clipboard.js?v=version"></script>
+
+  <style>
+    .jf-list{height: 863px;webkit-overflow-scrolling: touch; overflow-y: scroll;  }
+    .prize-list__ul{}
+      .more{width:100%;font-size:24px;text-align: center; margin-top:30px;}
+      .none{ display: none;}
+      .show-qrcode {
+		/*width : 100%;
+		text-align:center;*/
+	}
+	.thewm img {
+       /* width:100%;
+		display : inline-block !important;*/
+        margin: auto;
+        }
+
+       
+
+
+  </style>
+    <title name="我的奖品"></title>
+    <script type="text/javascript">
+
+        $(function () {
+            if (isFrame()) return;//activity-utils.js
+            //$.activity.settings.devModel = true;
+
+            
+            //var myscroll = null;
+            //var html = '';
+            //var onoff = 0;
+            var page = {
+                currentPage : 1,
+                totalPage   : 3,
+                showCount   : 7,
+                totalCount  : 18
+
+            };
+
+            if (top.location == location) {
+                $('.prize-list__ul').html('');//清空列表
+                loadDetail(1);
+            }
+
+            function showDetail(name, code, traceNo){
+                $.addCover();
+                $('.show-yhq').show();
+                $('.show-yhq').find('.name-txt').html(name);
+                if(code!='' && code!='null'){
+                    $('.show-yhq').find('.show-code').val(code);
+                }else{
+                    $('.show-yhq').find('.show-code').val(traceNo);
+                }
+                
+
+                $('.show-yhq').find('.sure').on('click',function(){
+                    $.removeCover();
+                    $('.show-yhq').hide();
+                });
+            }
+
+
+            function showDetail2(id,sendType){
+
+                //if(!prizeDetail[sendType]) return;
+
+                //积分账户明细列表
+                $.activity.loadPrizeDetail({
+                    data : {
+                        'activityId' : $('#activityId').val(),
+                        'activityLotteryDetailId' : id
+                    },
+                    sucFunc : function(datas){
+                        //查询成功
+                        console.log(datas);
+                        //alert(datas.extendParams.link);
+                        //alert(sendType);
+                        if(sendType=='LINK'){
+                            window.location.href = datas.extendParams.link;
+                        }else{
+                            prizeDetail[sendType](datas);
+                        }
+                        //window.location.href = datas.extendParams.link;
+                        
+                    }
+                });
+
+            }
+
+
+            var clipboard = new Clipboard('.copy-btn');
+            clipboard.on('success', function(e) {
+                $.alert('复制成功');
+            });
+
+            clipboard.on('error', function(e) {
+                $.alert('复制失败！请手动复制');
+            });
+            //alert($('.jf-list').height());
+
+          //  console.log($('.jf-list')[0].scrollHeight - $('.jf-list').height());
+            //var page = 1;
+            //var html = '<li><div class="left"><img src="./images/integral_icon.png" /></div><div class="middle"><div class="top">100积分</div><div class="bottom">中奖时间：2015.12.12</div></div><div class="right"><a href="#">进入积分商城</a></div></li>';
+
+            var flag = false;
+            //console.log($('.jf-list')[0].scrollHeight - $('.jf-list').height());
+            $('.jf-list').on('scroll',function(){
+              if(flag){
+                return false;
+              }
+              var bottomH = $('.jf-list')[0].scrollHeight - $('.jf-list').height();  //底部的距离
+              var jl = bottomH - 100;  //距离底部距离
+              if($('.jf-list').scrollTop() >= jl){
+                  flag = true;
+                  page.currentPage++;
+                  console.log('开始加载');
+                  //$('.more').show();
+                  loadDetail(page.currentPage);
+              }
+
+            });
+        
+            
+
+
+            /** 加载明细 */
+            function loadDetail(currentPage){
+
+               
+                //积分账户明细列表
+                $.activity.loadPrizeList({
+                    data : {
+                        'page.currentPage':currentPage,
+                        'page.showCount':page.showCount
+                    },
+                    sucFunc : function(datas){
+                        //查询成功
+                        //datas.page.totalResult / page.showCount;
+                        //var totalPage =  datas.page.totalResult % page.showCount ? totalPage + 1 : totalPage;
+                        var totalPage = datas.page.totalPage;
+                        console.log('currentPage:' +  page.currentPage);
+                        console.log('totalPage:' + totalPage);
+                        console.log(datas);
+                        var html = '';
+                        var list = datas.page.list;
+                        if(list && list.length>0){
+                        	var tetcode="";
+                            $(list).each(function(i,k){
+                              if(k.sendType == 'WX'){
+                                html = html + '<li class="red-packet">' +
+                                            '<div class="left"><img src="./images/prize_icons.png" /></div>' +
+                                            '<div class="middle">' +
+                                                '<div class="top">' + k.activityPrizeName  + '</div>' +
+                                                '<div class="bottom">中奖时间：' +  k.createTime + '</div>' +
+                                            '</div>' +
+                                            '<div class="right"><a href="myredpag.html?v=' + new Date().getTime() + '">我的红包</a></div>' +
+                                        '</li>';
+                              }else if(k.sendType == 'WL'){
+                                html = html + '<li class="red-packet">' +
+                                            '<div class="left"><img src="./images/prize_icons.png" /></div>' +
+                                            '<div class="middle">' +
+                                                '<div class="top">' + k.activityPrizeName  + '</div>' +
+                                                '<div class="bottom">中奖时间：' +  k.createTime + '</div>' +
+                                            '</div>' +
+                                            '<div class="right"><a href="finishInfo.html?activityLotteryDetailId=' + k.activityLotteryDetailId + '&v='+ new Date().getTime() + '">填写地址</a></div>' +
+                                        '</li>';
+                              }
+                              else if(k.sendType == 'JF'){
+                                html = html + '<li class="integral">' +
+                                            '<div class="left"><img src="./images/prize_icons.png" /></div>' +
+                                            '<div class="middle">' +
+                                                '<div class="top">' + k.activityPrizeName  + '</div>' +
+                                                '<div class="bottom">中奖时间：' +  k.createTime + '</div>' +
+                                            '</div>' +
+                                            '<div class="right"><a href="myJf.html?v=' + new Date().getTime() + '">完善信息</a></div>' +
+                                        '</li>';
+                              }else if(k.sendType == 'ZT'){
+                                html = html + '<li class="entity-prize">' +
+                                    '<div class="left"><img src="./images/prize_icons.png" /></div>' +
+                                    '<div class="middle">' +
+                                        '<div class="top">' + k.activityPrizeName  + '</div>' +
+                                        '<div class="bottom">中奖时间：' +  k.createTime + '</div>' +
+                                    '</div>' +
+                                    '<div class="right"><a class="lqm" data-id="'+ k.activityLotteryDetailId  + '">领取码 &gt</a></div>' +
+                                '</li>';
+                                }else if (k.sendType == 'CODE'){
+                                    html = html + '<li class="entity-prize">' +
+                                        '<div class="left"><img src="./images/prize_icons.png" /></div>' +
+                                        '<div class="middle">' +
+                                            '<div class="top">' + k.activityPrizeName  + '</div>' +
+                                            '<div class="bottom">中奖时间：' +  k.createTime + '</div>' +
+                                        '</div>' +
+                                        '<div class="right"><a class="ljlq" traceNo="' + k.traceNo  + '" code="' + k.couponCode + '" name="' + k.activityPrizeName + '" data-id="' + k.activityLotteryDetailId + '">立即领取 &gt</a></div>' +
+                                    '</li>';
+                                }else if(k.sendType == 'LINK'){
+                                html = html + '<li class="entity-prize">' +
+                                    '<div class="left"><img src="./images/prize_icons.png" /></div>' +
+                                    '<div class="middle">' +
+                                        '<div class="top">' + k.activityPrizeName  + '</div>' +
+                                        '<div class="bottom">中奖时间：' +  k.createTime + '</div>' +
+                                    '</div>' +
+                                    '<div class="right"><a class="ljlq2" data-id="' + k.activityLotteryDetailId  + '"type="' + k.sendType + '">立即领取 &gt</a></div>' +
+                                '</li>';
+                                }else if (k.sendType == 'YHQ'){
+                                    html = html + '<li class="entity-prize">' +
+                                        '<div class="left"><img src="./images/prize_icons.png" /></div>' +
+                                        '<div class="middle">' +
+                                            '<div class="top">' + k.activityPrizeName  + '</div>' +
+                                            '<div class="bottom">中奖时间：' +  k.createTime + '</div>' +
+                                        '</div>' +
+                                        '<div class="right"><a class="ljlq" traceNo="' + k.traceNo  + '" code="' + k.couponCode + '" name="' + k.activityPrizeName + '" data-id="' + k.activityLotteryDetailId + '">立即领取 &gt</a></div>' +
+                                    '</li>';
+                                }
+                                 
+
+                               
+
+
+                                //<li onclick="showDetail('+detail.activityLotteryDetailId+',\''+detail.sendType+'\','+detail.activityPrizeId+')"></li>
+                            });
+
+
+
+
+                            //initLoadMore(datas);
+                            $('.prize-list__ul').append(html);
+
+                            $('.ljlq').on('click',function(){
+                                var name = $(this).attr('name');
+                                var code = $(this).attr('code');
+                                var traceNo = $(this).attr('traceNo');
+                                showDetail(name, code, traceNo);
+                            });
+
+
+                            $('.ljlq2').on('click',function(){
+                                var type =$(this).attr('type');
+                                var id = $(this).attr('data-id');
+                                showDetail2(id,type);
+                            });
+
+                          
+
+                            $('.lqm').on('click',function(e){
+                                e.stopPropagation();
+                                getCode($(this).attr('data-id'));
+                            });
+
+                            $('.know-btn').on('click',function(e){
+                                e.stopPropagation();
+                                $('.zt-pop').hide();
+                            });
+
+                            /*
+                            if(currentPage <= totalPage){
+                              $('.more').html('没有更多数据~');
+                              return false;
+                            }
+                            */
+                            
+                            if(totalPage == 1){
+                                $('.more').hide();
+                                return false;
+                            }
+
+                            if(totalPage>1){
+                                $('.more').show();
+                            }
+
+                            if(currentPage >= totalPage){
+                              $('.more').html('没有更多数据~');
+                              flag = true;
+                              return false;
+                            }
+
+
+
+                            flag = false;
+                            console.log(datas.page.currentPage);
+
+
+
+                        }else{
+                          $('.more').html('暂无数据~').show();
+                        }
+
+                    },
+                    complete : function(){
+                      //  if(myscroll) myscroll.refresh();
+                    }
+                });
+
+
+
+            }
+
+
+           
+
+
+            function getCode(id){
+
+                $.activity.loadPrizeDetail({
+                    data : {
+                        activityId : $('#activityId').val(),
+                        activityLotteryDetailId : id
+                    },
+                    sucFunc : function(datas){
+                        console.log(datas);
+                        console.log(datas.activityPrize);
+                        console.log(1111);
+                        var extendParams = datas.extendParams || {};
+                        var prizeName = datas.activityPrize.prizeName;  //奖品名称
+                        var code = extendParams.couponCode;  //核销码
+                        var url = extendParams.ztUrl;  //提取二维码
+                        var prizeId = datas.activityPrize.activityPrizeId;
+                        var activityId = datas.activityPrize.activityId;
+                        $('.zt-pop .name').html(prizeName);
+                        $('.zt-pop .xlh').html(code);
+                        $('.thewm').html('');
+                        new QRCode($('.zt-pop .thewm')[0], url);//生成二维码
+
+                        $('.zt-pop').show();
+
+                        $('.zt-pop .look-btn').on('click',function(){
+                          location.href = 'ztAdress.html?v=version&prizeId=' + prizeId + '&activityId=' + activityId;
+                        });
+
+
+                    }
+
+                });
+
+
+
+            }
+
+        });
+    </script>
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="781">
+<div class="container" style="overflow: visible;">
+    <p class="con my-integral">
+        </p><div class="outer">
+        	<div class="scroll-container scroller">
+                <div class="jf-list" id="test">
+                    <ul class="prize-list__ul">
+
+                    </ul>
+                </div>
+
+	            <!--<div class="more"><i class="pull_icon"></i><span>上拉加载更多</span></div>-->
+              <div class="more none">上拉加载更多~</div>
+
+        	</div>
+
+        </div>
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+
+        <!--  自提奖品  -->
+        <div class="zt-pop none">
+            <p class="name">28天原浆一瓶</p>
+            <p class="xlh"><span class="leb">核销序列号：</span><span class="code">125dsad</span></p>
+            <div class="thewm"></div>
+            <p class="th">提货二维码</p>
+            <a class="look-btn">查看提货地址</a>
+            <a class="know-btn" href="##">我知道了</a>
+        </div>
+
+
+        <!--  奖品详情  虚拟奖  -->
+        <div class="m-pop show-yhq none">
+            <div class="m-pop__hd">
+                <img class="h3" src="images/jpxq_tit.png">
+                <p class="des prize-name">奖品名称：<span class="name-txt txt"></span></p>
+            </div>
+            <div class="m-pop__bd">
+                <div class="prize prize--invented">
+                    <input type="text" readonly="" class="des show-code" id="code1" style="width:95%;" value="">
+                </div>
+
+                <button class="copy-btn" type="button" data-clipboard-action="copy" data-clipboard-target="#code1" style=" background:none;border:none;color:#5d070c;font-size:25px;">点击复制</button>
+            </div>
+
+            <div class="btn-wrap mt38">
+                <button class="btn sure">确定</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</body></html>

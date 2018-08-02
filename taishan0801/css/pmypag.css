@@ -1,0 +1,104 @@
+.container{
+    background-color: #f4f4f4;
+}
+.pcontact,.p-age,.pname{
+    overflow: hidden;
+}
+.input{
+    margin-top:30px;
+}
+.input .input-control input{
+    width:100%;
+    height:100px;
+    border:1px solid #ddddde;
+    font-size:28px;
+    text-align: left;
+    text-indent:28px;
+}
+.input .input-control{
+    position: relative;
+}
+.input .input-control .clin{
+	height: 100px;
+    width: 50px;
+    /*border: 1px solid red;*/
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    text-align: center;
+}
+.input .input-control img{
+   margin-top:35px;
+}
+.input p.des{
+    width:696px;
+    margin:0 auto;
+    font-size:24px;
+    color: #999999;
+    margin-top:20px;
+    line-height:30px;
+}
+.sub{
+    margin-top:40px;
+}
+.sub button{
+    width:675px;
+    display: block;
+    border-radius:8px;
+    margin:0 auto;
+    border:0;
+    font-size:36px;
+    color:#fff;
+    height:98px;
+    background-color: #4592f0;
+}
+
+.sub .hbmx{ margin-top:40px; } 
+
+.wrongmsg{
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height:  70px;
+	/*background: #CCCCCC;*/
+	border-radius: 5px;
+	line-height: 70px;
+	padding: 5px;
+	text-align: center;
+	color: #fff;
+	font-size: 28px;
+}
+.wrongmsg span{
+	background: url(../images/runbg.png);
+	padding: 25px;
+	border-radius: 5px;
+}
+
+.pcontact{font-size: 30px;}
+.pag-zone{ width: 675px; margin:auto; margin-top: 35px; background: #fff;  height: 474px;}
+.pag-zone .result{text-align: center;}
+.pag-zone .img{ width: 75px; height: 76px;margin-top:38px;}
+.pag-zone .name{font-size: 32px; margin-top:10px;}
+.pag-zone .total{font-size: 60px;}
+
+.pag-zone .enter{}
+.pag-zone .enter input{ font-size:30px; }
+.pag-zone .enter .tq{width:90%; margin:auto; margin-top: 55px; }
+.pag-zone .enter .item{border-bottom: 1px solid #dcdcdc; width: 90%; margin:auto; margin-top:50px; padding-bottom: 30px;}
+
+.zysx{  width: 675px;margin:auto; margin-top:35px;}
+.zysx dd{margin-top: 10px;}
+
+/*
+::-webkit-input-placeholder { !* WebKit browsers *!
+    text-align: left;
+}
+:-moz-placeholder { !* Mozilla Firefox 4 to 18 *!
+}
+::-moz-placeholder { !* Mozilla Firefox 19+ *!
+}
+:-ms-input-placeholder { !* Internet Explorer 10+ *!
+}*/

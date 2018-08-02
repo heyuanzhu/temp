@@ -1,0 +1,120 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=yes">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/pcenter.css?v=version">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js?v=version"></script>
+    <script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+  	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+    <script type="text/javascript" src="js/util.js?v=1"></script>
+    <!--
+    <script type="text/javascript" src="../js/util/global.js?t=1484895918673"></script>
+    <script type="text/javascript" src="../js/util/common.js?t=1484895918673"></script>
+
+    <script type="text/javascript" src="js/my-info.js?t=1484895918673"></script>
+      -->
+    <title name="个人信息"></title>
+    <script>
+    	$(document).ready(function(){
+    		//$('.updateUserInfo').show();
+        if (isFrame()) {
+  				return;//activity-utils.js
+  			}
+
+    		// 加载用户信息
+    		$.activity.loadRegisterInfo({
+    			sucFunc : function(datas){
+            var userId = '';
+            var sex = '';
+            if(datas.activityRegister.sex==1){
+              sex = '男' ;
+            }else if(datas.activityRegister.sex==0){
+              sex = '女' ;
+            }
+            var address = '';
+    				$('#headPhoto').attr('src',datas.activityRegister.wxHeadUrl);  //头像
+    				$('#nickname').text(datas.activityRegister.wxNick);  //昵称
+            $('#userId').html(userId);  //会员账号
+            $('#registerName').html(datas.activityRegister.wxNick); //真实姓名
+            $('#age').html(datas.activityRegister.age);   //年龄
+            $('#phone').html(datas.activityRegister.phone);  //联系方式
+            $('#sex').html(sex);  //性别
+            $('#address').html(address);  //收件地址
+    			}
+    		});
+
+
+        // 更新个人信息
+        function updateUserInfo(){
+          location.href = 'update_userInfo.html';
+        }
+
+        $('.listul_msg li').on('click',function(){
+          updateUserInfo();
+        });
+
+
+    	});
+
+    </script>
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="781">
+<div class="container" style="overflow: visible;">
+    <div class="con">
+        <div class="top_warp">
+        	<ul class="ul_permsg">
+        		<li>
+        			<div class="pphoto">
+        				<!--头像-->
+        				<div class="warpphoto">
+        					<img class="perphoto" id="headPhoto" src="images/baoxiang_03.png">
+        				</div>
+        				<!--年龄性别
+        				<div class="sex">
+        					<img id="sexImg" src="images/boy_03.png" />
+        					<span id="ageImg" class="age">22</span>
+        				</div>-->
+        			</div>
+        		</li>
+        		<li><span id="nickname">我的昵称</span></li>
+        	</ul>
+        </div>
+       	<div class="center_body">
+       		<div class="listaddress">
+       			<ul class="listul_msg">
+              <!--
+       				<li class="ccunt">会员帐号
+       					<div class="content" id="userId">3213213</div>
+       				</li>
+            -->
+       				<li class="name">真实姓名
+       					<div class="content" id="registerName"></div>
+       				</li>
+       				<li class="nlage">年龄
+       					<div class="content" id="age"></div>
+       				</li>
+       				<li class="lxnum">联系方式
+       					<div class="content" id="phone"></div>
+       				</li>
+       				<li class="sexlinoseconbg">性别
+       					<div class="content" id="sex"></div>
+       				</li>
+       				<li class="sjadd" id="addressClick">收件地址
+       					<div class="content" id="address"></div>
+       				</li>
+       			</ul>
+       		</div>
+       	</div>
+    </div>
+</div>
+
+
+</body></html>

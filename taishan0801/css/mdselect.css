@@ -1,0 +1,162 @@
+.container{background: url(../images/ts_bg2.png) no-repeat;background-size:100% 100%;overflow: hidden;height: 100%;width: 100%;}
+.asiawarp{
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+.logo{
+	width: 560px;
+	overflow: hidden;
+	margin: 0 auto;
+	padding-top:35px;
+}
+.zyd_body{
+	width: 540px;
+	height: 920px;
+	margin: 15px auto 0;
+}
+.titzydwarp{
+	height: 194px;
+	width: 538px;
+	background: url(../images/zydtit_03.png) no-repeat;
+}
+.ressbody{
+	width: 538px;
+	height: 573px;
+	background: url(../images/zc_body_06.png) no-repeat;
+	overflow: hidden;
+	background-size: contain;
+}
+.dzlist{
+	width: 480px;
+	height: 500px;
+	margin: 30px auto 0;
+	overflow: scroll;
+}
+.dzlist ul li{
+	margin-bottom: 35px;
+}
+.mdname span{
+	font-size: 26px;
+	color: #fffdc9;
+	padding: 0 10px;
+	background: #af4a29;
+	border: 1px solid #833f0f;
+	display: inline-block;
+	border-radius: 40px;
+	height: 40px;
+	line-height: 40px;
+}
+.dz_msg{
+	font-size: 26px;
+	color: #af4a29;
+	line-height: 40px;
+	border-bottom:1px dashed #813b0b;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;-webkit-line-clamp: 2;/*控制在第几行开始 超出加省略号*/ 
+	-webkit-box-orient: vertical;
+	margin-top: 10px;
+	padding-bottom:5px
+}
+.myposition{
+	height: 40px;
+	width: 180px;
+	border-radius: 40px;
+	background: #af4a2e url(../images/select_icon1.png) no-repeat 147px;
+	border: 1px solid #843c0d;
+	color: #fffdc9;
+	font-size: 26px;
+	text-align: center;
+	line-height: 40px;
+	float: right;
+	margin-right: 5px;
+    margin-top: 44px;
+    position: relative;
+}
+
+.tc_warp{
+	display: none;
+	height: 389px;
+    width: 639px;
+    border: 2px solid #843c0d;
+    background: #fffdc9;
+	position: absolute;
+    left: -416px;
+    border-radius: 20px;
+    z-index: 1;
+    top:58px
+}
+.iconsj{
+	    position: absolute;
+    top: -15px;
+    right: 55px;
+
+}
+.potion_My{
+	width: 523px;
+	margin: 25px auto 0;
+}
+.gps{
+	color: #af4a2e;
+	font-size: 26px;
+	font-weight: 700;
+	padding-left: 20px;
+	height: 35px;
+	line-height: 35px;
+	text-align: left;
+}
+.sle_pos{
+	-webkit-appearance: none;
+	height: 40px;
+	width:175px;
+	border-radius: 10px;
+	border:none;
+	padding-left:35px;
+	font-size: 20px;
+	color: #b3b3b3;
+	background: #fff url(../images/select_icon.png) no-repeat 136px;
+	border-radius: 40px;
+	border: 1px solid #813b09;
+}
+.left{float: left;}
+.right{float: right;}
+.ov-flow{
+	overflow: hidden;
+}
+.city_sx{
+	color: #af4a2e;
+	font-size: 26px;
+	font-weight: 700;
+	padding-left: 20px;
+	height: 35px;
+	line-height: 35px;
+	text-align: left;
+	margin-top: 25px;
+}
+.sxbtn{
+	margin-left: 10px;
+}
+.sle_long{
+	-webkit-appearance: none;
+	height: 40px;
+	width:244px;
+	border-radius: 10px;
+	border:none;
+	padding-left:35px;
+	font-size: 20px;
+	color: #b3b3b3;
+	background: #fff url(../images/select_icon.png) no-repeat 195px;
+	border-radius: 40px;
+	border: 1px solid #813b09;
+}
+.citysel{
+	margin-top: 20px;
+}
+.qd_btn{
+	margin-top: 44px;
+}
+.gpsaddress{
+	color: #af4a29;
+	text-align: left;
+}

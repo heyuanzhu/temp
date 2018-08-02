@@ -1,0 +1,51 @@
+.container{
+    width:100%;
+    height:100%;
+    background: url("../images/bg2.jpg") no-repeat top center;
+    background-size: 100% 100%;
+}
+.con{
+    height:100%;
+    overflow: hidden;
+}
+.outer {
+    width: 487px;
+    margin:22% auto 0;
+    border-radius:28px;
+    padding:8px 8px 14px;
+    border: 2px solid #813b0b;
+    background-color: #fff;
+    overflow: hidden;
+    text-align: center;
+}
+.main-con{
+    width:100%;
+    height:324px;
+    border-radius:18px;
+    border:1px solid #f7931e;
+    background-color: #fec700;
+    text-align: center;
+}
+.main-con img{
+    margin-top:80px;
+}
+.main-con p{
+    color: #813b0b;
+    font-size:25.8px;
+    line-height: 100%;
+    font-weight:bold;
+    margin-top:44px;
+}
+.main-bottom{
+    text-align: center;
+}
+.main-bottom img.qrcode{
+    border: 2px solid #813b0b;
+    margin-top:33px;
+}
+.main-bottom img.arrow-icon{
+    display: block;
+    width: 31px;
+    height: 31px;
+    margin: 12px auto 0;
+}

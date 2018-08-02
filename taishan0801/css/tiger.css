@@ -1,0 +1,245 @@
+.container{background: url(../images/ts_bg2.png) no-repeat;background-size:100% 100%;overflow: hidden;height: 100%;width: 100%;}
+.logo{
+	width: 560px;
+	overflow: hidden;
+	margin: 0 auto;
+	padding-top:35px;
+}
+.tiger{
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+.tigerbody{
+	height: 950px;
+	width: 663px;
+	background: url(../images/tiger_2_03.png);
+	position: absolute;
+	margin: auto;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.roll{
+	height: 203px;
+	width: 505px;
+	margin: 250px auto 0;
+	overflow: hidden;
+}
+.remind{
+	width: 399px;
+	height: 37px;
+	line-height: 37px;
+	text-align: center;
+	font-size: 25px;
+	color: #FFFFFF;
+	margin: 40px auto 0;
+}
+.btn_start{
+	width: 202px;
+    height: 118px;
+    border: none;
+    margin: 30px auto 0;
+    display: block;
+    background: none;
+    border-radius: 199px;
+    position: relative;
+    z-index: 2;
+    background: url(../images/lhjksyx.png) no-repeat center;
+}
+.btn_again{
+	background-image:url(../images/gain_one_03.png);
+}
+.laba_msg{
+	height: 35px;
+	margin: 97px auto 0;
+	line-height: 35px;
+	font-size: 22px;
+	color: #fff;
+	width: 400px;
+	background: url(../images/laba_03.png) no-repeat left;
+	padding-left: 45px;
+}
+.btnactive_warp{
+	height: 80px;
+	width: 580px;
+	margin: 20px auto 0;
+}
+.rulebtn_l{
+	height: 80px;
+	width: 180px;
+	background: none;
+	border: none;
+	border-radius: 80px;
+	color: #fff;
+	font-size: 26px;
+	font-weight: 700;
+}
+.regetbtn_r{
+	height: 80px;
+	width: 251px;
+	background: none;
+	border: none;
+	border-radius: 80px;
+	color: #fff;
+	font-size: 26px;
+	font-weight: 700;
+	float: right;
+}
+/*跑马灯样式*/
+.slotMachine{
+	display: inline-block;
+	width: 164px;
+	height: 205px;
+	overflow: hidden;
+	position: relative;
+}
+.slotMachine .slot{
+	width: 163px;
+	height: 205px;
+	text-align: center;
+	line-height: 205px;
+	font-size: 50px;
+	position: relative;
+}
+.slotMachine .slot img{
+	vertical-align: middle;
+}
+.slotMachine .slot div{
+	position: absolute;
+	display: block;
+	bottom: 4px;
+	left:0;
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	color: #808080;
+	line-height: 30px;
+}
+.t_prize{
+	position: absolute;
+	width: 164px;
+	height: 205px;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+}
+.t_prize{
+	width: 163px;
+	height: 205px;
+	text-align: center;
+	line-height: 205px;
+	font-size: 50px;
+}
+.none{
+	display: none;
+}
+/*滚动动画*/
+.hand-animate { 
+	-webkit-animation: hand_move infinite 1s;
+    -moz-animation: hand_move infinite 1s; }
+
+ @-moz-keyframes hand_move {
+        0% {
+			margin-top: 0px;           
+            }
+        25% {
+            	margin-top: -1230px;
+            }
+        50% {
+            	margin-top: 0px;
+            }
+            75% {
+            	margin-top: -1230px;
+            }
+        100% {
+            margin-top: 0px;
+            }
+    }
+				 
+ @-webkit-keyframes hand_move {
+        0% {
+			margin-top: 0px;           
+            }
+        25% {
+            	margin-top: -1230px;
+            }
+        50% {
+            	margin-top: 0px;
+            }
+            75% {
+            	margin-top: -1230px;
+            }
+        100% {
+            margin-top: 0px;
+            }
+    }
+    
+/*积分不足弹窗*/
+.show_login{
+	height: 480px;
+	width: 539px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: url(../images/bg_jfno_03.png) no-repeat top;
+	text-align: center;
+}
+.jfimg{
+	margin-top: 112px;
+	text-align: center;
+}
+.sorry{
+	font-size: 46px;
+	color: #f79700;
+	font-weight: 900;
+	width: 425px;
+	margin: auto;
+	text-align: right;
+}
+.btn_showwarp{
+	margin-top: 88px;
+}
+/*未中奖弹层样式*/
+.show_done{
+	width: 540px;
+	height: 705px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: url(../images/wzjshow_03.png) no-repeat top;
+}
+.btn_ok{
+	text-align: center;
+	margin-top: 635px;
+}
+/*中奖弹窗*/
+.show_Prize{
+	width: 540px;
+	height: 657px;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: url(../images/prize_bg_03.png) no-repeat top;
+}
+.prize_m{
+	font-size: 38px;
+	color: #803b0b;
+	text-align: center;
+	font-weight: 700;
+	margin-top: 74px;
+}
+.btn_ok2{
+	text-align: center;
+	margin-top: 390px;
+}

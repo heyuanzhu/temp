@@ -1,0 +1,244 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/ztAdress.css?v=version">
+
+    <script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+	<script type="text/javascript" src="./js/jquery.eraser.js?v=version"></script>
+	<script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+
+	<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8" ></script>
+	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+
+	<script type="text/javascript" src="./js/ys.js?v=version"></script>
+	<script type="text/javascript" src="js/asia.js?v=version"></script>
+	<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=version"></script>
+  <style>
+    .list-table{
+        display: table;
+        width:100%;
+    }
+    .list-row{
+        display: table-row;
+    }
+    .list-cell{
+        display: table-cell;
+        text-align: left;
+        vertical-align: middle;
+        padding:10px 5px;
+    }
+    .list-hd .list-cell{font-weight:bold;}
+    .list-bd{
+        height: 450px;
+        overflow-y: auto;
+    }
+    .list-hd .adress-tit{width:50%; text-align: left;}
+    .list-bd .list-adress{width:50%;}
+  </style>
+    <title name="门店"></title>
+    <script type="text/javascript">
+        $(function () {
+            if (isFrame()) return;//activity-utils.js
+            //$.activity.settings.devModel = true;
+
+
+            var activityId = getParam('activityId');
+            var prizeId = getParam('prizeId');
+            var page = {
+                currentPage : 1,
+                totalPage   : 3,
+                showCount   : 6,
+                totalCount  : 18
+            };
+
+            //初始化省市区
+            $.activity.initialArea({
+                province : '.select-province',
+                city : '.select-city',
+                //county : '.select-county'
+                onChange:function(){
+                  loadStore(1);
+                  console.log(1111);
+                },
+            });
+
+
+
+
+
+
+            //  上拉加载更多
+            var flag = false;
+            //console.log($('.jf-list')[0].scrollHeight - $('.jf-list').height());
+            $('.list-bd').on('scroll',function(){
+              if(flag){
+                return false;
+              }
+              var bottomH = $('.list-bd')[0].scrollHeight - $('.list-bd').height();  //底部的距离
+              var jl = bottomH - 100;  //距离底部距离
+              if($('.list-bd').scrollTop() >= jl){
+                  flag = true;
+                  page.currentPage++;
+                  console.log('开始加载');
+                  $('.more').show();
+                  loadStore(page.currentPage);
+                  /*setTimeout(function(){
+                    $('.more').hide();
+                  },1000);*/
+              }
+
+            });
+
+
+
+            // 加载门店地址
+            function loadStore(currentPage){
+              $.activity.loadUserStoreList({
+                  data : {
+                      activityId : activityId,
+                      currentPage:currentPage,
+                      prizeId : prizeId,	//奖品id，必填
+                      provinceId : $('.select-province').val(),//省份id，非必填
+                      cityId : $('.select-city').val(), //城市id，非必填
+                  //    countyId : 10,//县id，非必填
+                    //  townId : 10,//乡镇id，非必填
+                    //  address : '江场西路'//详细地址，模糊匹配
+                  },
+                  sucFunc : function(datas){
+                    var html = '';
+                      console.log(datas);
+                      var list = datas.page.list;//门店列表
+
+                      if(!list) return;
+
+                      for(var i=0;i<list.length;i++){
+                          /*var store = list[i];
+                          var name = store.name;
+                          var phone = store.phone;
+                          var area = store.area;
+                          var province = store.province;
+                          var city = store.city;
+                          var county = store.county;
+                          var town = store.town;
+                          var address = store.address;
+                          */
+                          html += '<div class="list-row">' +
+                              '<span class="list-cell list-adress">' + list[i].address+ '</span>' +
+                              '<span class="list-cell list-phone">' + list[i].phone  + '</span>' +
+                          '</div>';
+
+                      }
+                      $('.list-bd .list-table').html(html);
+                  }
+              });
+            }
+
+
+
+            //  查看
+            $('.look').on('click',function(){
+              page.currentPage = 1;
+              loadStore(page.currentPage);
+            });
+
+
+        });
+    </script>
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="">
+<div class="container">
+    <div class="con adress-page">
+        <div class="zt-adress">
+            <div class="hd">
+                <select class="select province select-province"><option>省</option></select>
+                <select class="select city select-city"><option>市</option></select>
+                <!-- <div class="look">查看</div> -->
+            </div>
+            <div class="bd">
+                <div class="outer">
+                    <div class="scroll-container scroller">
+                        <div class="list-hd">
+                            <div class="list-table">
+                                <div class="list-row">
+                                    <span class="list-cell adress-tit">门店地址</span>
+                                    <span class="list-cell phone-tit">门店电话</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="list-bd">
+                            <div class="list-table">
+                                <!--
+                                <div class="list-row">
+                                    <span class="list-cell list-adress">
+                                        北京市朝阳区光华路8号和乔大厦A座420室
+                                    </span>
+                                    <span class="list-cell list-phone">
+                                        15601256598
+                                    </span>
+                                </div>
+                                <div class="list-row">
+                                    <span class="list-cell list-adress">
+                                        北京市朝阳区光华路8号和乔大厦A座420室
+                                    </span>
+                                    <span class="list-cell list-phone">
+                                        15601256598
+                                    </span>
+                                </div>
+                                <div class="list-row">
+                                    <span class="list-cell list-adress">
+                                        北京市朝阳区光华路8号和乔大厦A座420室
+                                    </span>
+                                    <span class="list-cell list-phone">
+                                        15601256598
+                                    </span>
+                                </div>
+                              -->
+                            </div>
+
+
+                        </div>
+                        <!--
+                         <table class="adress-list" id="">
+                             <thead>
+                                 <tr>
+                                    <th width="60%"></th>
+                                    <th>门店电话</th>
+                                 </tr>
+
+                             </thead>
+                             <tbody>
+                                <tr>
+                                    <td>北京市朝阳区光华路8号和乔大厦A座420室</td>
+                                    <td>15601256598</td>
+                                </tr>
+                             </tbody>
+                         </table>
+                         -->
+                         <p class="more">上拉加载更多</p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body></html>

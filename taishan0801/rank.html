@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html id="all">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=750,user-scalable=yes">
+		<meta content="telephone=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+		<link rel="stylesheet" type="text/css" href="./css/rank.css?v=version">
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js?t=1515725473415"></script>
+		<script type="text/javascript" src="js/jquery.mobile.custom.min.js?t=1515725473415"></script>
+		<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+		<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+		<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+		<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+		<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+		<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+		<script type="text/javascript" src="js/util.js?v=version"></script>
+		<title name="排行榜"></title>
+		<style type="text/css">
+			html,body{
+				overflow: hidden;
+				font-size: 0;
+				position: relative;
+			}
+			.list-ul {
+				width: 98%;
+				margin: 0 auto;
+				margin-top: 1%;
+				height: 68%;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+		</style>
+	</head>
+
+	<body marginwidth="0" marginheight="0">
+
+		<!--<input id="allRankId" links-editor="links-editor-text-content" links-editor-title="全国排行榜ID" type="hidden" value="49" />
+		<input id="allCityId" links-editor="links-editor-text-content" links-editor-title="城市排行榜ID" type="hidden" value="50" />-->
+		<input id="perPageCount" links-editor="links-editor-text-content" links-editor-title="排行榜分页数量" type="hidden" value="20" />
+
+		<div class="container rank-page">
+			<input id="activityId" type="hidden" value="781">
+
+			<div class="con">
+				<img class="jie" src="images/rank/6.png" />
+				<img class="logo" src="images/rank/1.png" />
+				<div class="to-rule"></div>
+				<img class="banner" src="images/rank/14.png" />
+				<div class="rank-box">
+					<div class="total-rank">
+						我的全国排名:<span id="allRank"></span>&nbsp;&nbsp; 我的市排名:
+						<span id="cityRank"></span>
+					</div>
+					<table class="table-title" cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td><img id="menu-img-0" class="menu" data-id="8" src="images/rank/9.png" /></td>
+							<td><img id="menu-img-1" class="menu" data-id="10" src="images/rank/10.png" /></td>
+							<td><img id="menu-img-2" class="menu" data-id="12" src="images/rank/12.png" /></td>
+						</tr>
+					</table>
+					<div class="list-container">
+						<img class="list-bg" src="images/rank/5.png" />
+						<div class="list-body">
+							<div class="city-box" style="opacity: 0;">
+								<span id="province"></span>
+								<span id="city"></span>
+							</div>
+							<div class="list-title">
+								<span>排行</span>
+								<span>头像</span>
+								<span>微信昵称</span>
+								<span>扫码量</span>
+							</div>
+							<ul id="lists0" class="list-ul" style="display: block;">
+								<!--<li>
+        					<span>第1名</span>
+        				    <span><img class="uheader" src="images/rank/15.png" /></span>
+        				    <span>微信昵称</span>
+        				    <span>扫码量</span>
+        				</li>-->
+							</ul>
+							<ul id="lists1" class="list-ul">
+								<!--<li>
+        					<span>第1名</span>
+        				    <span><img class="uheader" src="images/rank/15.png" /></span>
+        				    <span>微信昵称1</span>
+        				    <span>扫码量</span>
+        				</li>-->
+							</ul>
+							<ul id="lists2" class="list-ul">
+								<!--<li>
+        					<span>第1名</span>
+        				    <span><img class="uheader" src="images/rank/15.png" /></span>
+        				    <span>微信昵称2</span>
+        				    <span>扫码量</span>
+        				</li>-->
+							</ul>
+							<div class="btn-more">加载更多</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/layer/layer.js"></script>
+		<script>
+			var $_i = 0; //当前的排行榜表索引
+			var provinceId = '',
+				areaId = '',
+				provinceName = '',
+				areaName = '';
+			var checkTimer = null;
+			var getPosition = false;
+			var $_pages = new Array(1, 1, 1); //三个排行的当前页数数组
+			var $_data1=new Array(), $_data2=new Array(), $_data3=new Array();
+			var $_per = $("#perPageCount").val() || 20; //每页条数
+			console.log("分页数量：" + $_per);
+			var allCountyId = 0,
+				allCityId = 0,
+				monthCityId = 0;
+
+			$(function() {
+
+				//活动规则
+				$(".to-rule").on("click", function() {
+					location.href = 'rule.html?v=version';
+				});
+
+				//切换tab
+				$(".table-title td").each(function(index) {
+					$(this).on("click", function(e) {
+
+						//设置当前的索引
+						$_i = index;
+						if($_i == 0) { //全国排名时隐藏头部的城市
+							$(".city-box").css("opacity", "0");
+						} else {
+							$(".city-box").css("opacity", "1");
+						}
+						$(".menu").each(function(i) {
+							var $sid = parseInt($(this).attr("data-id"));
+							if(index == i) {
+								$sid = $sid + 1;
+							}
+							$(this).attr("src", "images/rank/" + $sid + ".png");
+						});
+						$(".list-ul").each(function(n) {
+							if(n == index) {
+								$("#lists" + n).css("display", "block");
+							} else {
+								$("#lists" + n).css("display", "none");
+							}
+						});
+
+					});
+				});
+
+				if(isFrame()) {
+					return;
+				}
+
+				//加载更多按钮
+				$(".btn-more").on("click", function() {
+
+					//console.log("the i is: "+$_i);
+					if($_i == 0) {
+						showPageCounty();
+					} else if($_i == 1) {
+						showPageCity();
+					} else if($_i == 2) {
+						showPageMonth();
+					}
+
+				});
+
+				// 加载用户信息
+				$.activity.loadRegisterInfo({
+					sucFunc: function(datas) {
+						//查询成功
+						console.log("----loadRegisterInfo-------");
+						console.log(datas);
+					}
+				});
+
+				//排行榜配置
+				$.activity.getActivityRankingListPage({
+					data: {
+						'page.currentPage': 1,
+						'page.showCount': 10
+					},
+					sucFunc: function(datas) {
+						//查询成功
+						console.log("----getActivityRankingListPage-------");
+						console.log(datas);
+
+						var lists = datas.page.list;
+						for(var i = 0; i < lists.length; i++) {
+							var $_list = lists[i];
+							if($_list.name.indexOf("全国") > -1) {
+								allCountyId = $_list.activityRankingBaseInfoId;
+							} else if($_list.name.indexOf("月") > -1) {
+								monthCityId = $_list.activityRankingBaseInfoId;
+							} else if($_list.name.indexOf("城市") > -1) {
+								allCityId = $_list.activityRankingBaseInfoId;
+							}
+
+						}
+
+						console.log("全国排行榜ID：" + allCountyId);
+						console.log("城市排行榜ID：" + allCityId);
+						console.log("城市月排行榜ID：" + monthCityId);
+
+						//获取用户GPS
+						checkLocation(new Date().getTime());
+						//显示全国排行榜
+						setAllRanking();
+
+					}
+				});
+
+				//获取用户GPS
+				weixinConfig({
+					debug: false,
+					getLocation: true
+				});
+
+			});
+
+			//获取GPS
+			function checkLocation(time) {
+				if(getPosition) return;
+				$.activity.getLocation({
+					sucFunc: function(datas) {
+						console.log("-----GPS------");
+						console.log(datas);
+
+						var longitude = datas.longitude;
+						var latitude = datas.latitude;
+
+						if(longitude && latitude) {
+
+							getPosition = true;
+							clearTimeout(checkTimer);
+							//根据GPS设置用户位置参数
+							provinceId = datas.gpsProvinceId;
+							areaId = datas.gpsCityId;
+							provinceName = datas.gpsProvince;
+							areaName = datas.gpsCity;
+							//alert("你的GPS位置："+provinceName+"-"+areaName);
+
+							//显示城市名称
+							$("#province").text(provinceName);
+							$("#city").text(areaName);
+
+							//获取地理位置完毕，根据信息获取个人城市排行榜
+							setCityRanks();
+							setCityRanksByMonth();
+
+						}
+
+						if(longitude == null || latitude == null) {
+							//地理位置获取中或者地理位置已经获取失败
+							var timeCost = new Date().getTime() - time;
+							console.log(timeCost);
+							if(timeCost >= 5000) {
+								clearTimeout(checkTimer);
+								return false;
+							} else {
+								checkTimer = setTimeout(function() {
+									checkLocation(time); //重新检查
+								}, 1000);
+							}
+
+						}
+
+					},
+					errFunc: function(message, code, datas) {
+						//$.alert('可能位置信号不好，换个地方试试看');
+					}
+
+				});
+			}
+
+			//全国排行数据
+			function setAllRanking() {
+
+				$.activity.getCycleListByRankingBaseInfoId({
+					data: {
+						'page.currentPage': 1,
+						'page.showCount': 10,
+						activityRankingBaseInfoId: allCountyId
+					},
+					sucFunc: function(datas) {
+						//查询成功
+						console.log("----getCycleListByRankingBaseInfoId-------");
+						console.log(datas);
+						var lists = datas.page.list;
+						var activityRankingCycleId = lists[0].activityRankingCycleId;
+						var activityRankingBaseInfoId = lists[0].activityRankingBaseInfoId;
+
+						if(lists.length <= 0) {
+							var $_li = "<li>暂无排行数据</li>";
+							$("#lists0").empty().append($_li);
+							return false;
+						}
+						console.log("next all page :" + $_pages[0]);
+						$.activity.getRankingForRegister({
+							data: {
+								'page.currentPage': $_pages[0],
+								'page.showCount': 10,
+								activityRankingCycleId: activityRankingCycleId,
+								activityRankingBaseInfoId: activityRankingBaseInfoId,
+							},
+							sucFunc: function(datas) {
+								//查询成功
+								console.log("----getRankingForRegister-------");
+								console.log(datas);
+								var rankings = datas.rankings;
+								var ranking = datas.ranking;
+								var member = '';
+								if($_pages[0] == 1) { //首次加载，显示排名
+									if(ranking && ranking.sort) {
+										$("#allRank").text(ranking.sort); //我的全国排名
+									} else {
+										$("#allRank").text('0'); //我的全国排名
+									}
+								}
+
+								if(rankings && rankings.length > 0) { //全国排名列表         
+									$_data1 = rankings; //设置全国排行榜数据数组
+									showPageCounty();
+								}
+							}
+						});
+
+					}
+				});
+			}
+
+			function setCityRanks() {
+				//城市排行榜数据
+				$.activity.getCycleListByRankingBaseInfoId({
+					data: {
+						'page.currentPage': 1,
+						'page.showCount': 10,
+						activityRankingBaseInfoId: allCityId
+					},
+					sucFunc: function(datas) {
+						//查询成功
+						console.log("----getCycleListByRankingBaseInfoId-39-------");
+						console.log(datas);
+						var lists = datas.page.list;
+						var activityRankingCycleId = lists[0].activityRankingCycleId;
+						var activityRankingBaseInfoId = lists[0].activityRankingBaseInfoId;
+
+						if(lists.length <= 0) {
+							var $_li = "<li>暂无排行数据</li>";
+							$("#lists0").empty().append($_li);
+							return false;
+						}
+
+						$.activity.getRankingForRegister({
+							data: {
+								'page.currentPage': $_pages[1],
+								'page.showCount': 10,
+								activityRankingCycleId: activityRankingCycleId,
+								activityRankingBaseInfoId: activityRankingBaseInfoId,
+								provinceId: provinceId,
+								areaId: areaId
+							},
+							sucFunc: function(datas) {
+								//查询成功
+								console.log("----getRankingForRegister-city-------");
+								console.log(datas);
+								var rankings = datas.rankings;
+								var ranking = datas.ranking;
+								var member = '';
+								if($_pages[1] == 1) {
+									if(ranking && ranking.sort) {
+										$("#cityRank").text(ranking.sort); //我的全国排名
+									} else {
+										$("#cityRank").text('0'); //我的全国排名
+									}
+								}
+
+								//模拟数据
+								//showPageCity();
+
+								if(rankings && rankings.length > 0) { //全国排名列表         
+									$_data2 = rankings; //设置全国排行榜数据数组
+									showPageCity();
+								}
+							}
+						});
+
+					}
+				});
+
+			}
+
+			//设置城市月排行榜数据
+			function setCityRanksByMonth() {
+				//城市月排行榜数据
+				$.activity.getCycleListByRankingBaseInfoId({
+					data: {
+						'page.currentPage': 1,
+						'page.showCount': 10,
+						activityRankingBaseInfoId: monthCityId
+					},
+					sucFunc: function(datas) {
+						//查询成功
+						console.log("----getCycleListByRankingBaseInfoId-40-------");
+						console.log(datas);
+						var lists = datas.page.list;
+						var activityRankingCycleId = lists[0].activityRankingCycleId;
+						var activityRankingBaseInfoId = lists[0].activityRankingBaseInfoId;
+
+						if(lists.length <= 0) {
+							var $_li = "<li>暂无排行数据</li>";
+							$("#lists0").empty().append($_li);
+							return false;
+						}
+
+						console.log("next month page :" + $_pages[2]);
+
+						$.activity.getRankingForRegister({
+							data: {
+								'page.currentPage': $_pages[2],
+								'page.showCount': 10,
+								activityRankingCycleId: activityRankingCycleId,
+								activityRankingBaseInfoId: activityRankingBaseInfoId,
+								provinceId: provinceId,
+								areaId: areaId
+							},
+							sucFunc: function(datas) {
+								//查询成功
+								console.log("----getRankingForRegister-city-month-------");
+								console.log(datas);
+								var rankings = datas.rankings;
+								var ranking = datas.ranking;
+								var member = '';
+
+								//模拟数据
+								//showPageMonth(1);
+
+								if(rankings && rankings.length > 0) { //城市月榜         
+									$_data3 = rankings; //设置全国排行榜数据数组
+									showPageMonth(1);
+								}
+							}
+						});
+
+					}
+				});
+			}
+
+			//正常排行加载数据部分，先注释掉
+			/*//全国排行榜分页增加
+			function showPageCounty(page){
+				var p = $_pages[0]; //显示当前页面
+				var total = $_data1.length; //总记录数
+				var c = parseInt(total/$_per);//总页数
+				var start = (p-1)*$_per;
+				var end = p*$_per>=total?total:p*$_per; //正常计算分页最大值
+				console.log(end);
+				
+				console.log("total res: "+ total);
+				console.log("total page: "+ c);
+				
+				//正常加载数据
+				for(var i = start; i<end; i++){
+					item = $_data1[i];
+					var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${item.sort}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick}</span>
+        				    <span>${item.activityRegister.lotteryCount}</span>
+        				</li>`;
+						$("#lists0").append(moreHtml);
+				}
+				
+				$_pages[0] = p+1;
+			}
+			
+			//城市排行榜分页增加
+			function showPageCity(page){
+				var p = $_pages[1]; //显示当前页面
+				var total = $_data2.length; //总记录数
+				var c = parseInt(total/$_per);//总页数
+				var start = (p-1)*$_per;
+				var end = p*$_per>=total?total:p*$_per; //正常计算分页最大值
+				
+				console.log("total res: "+ total);
+				console.log("total page: "+ c);
+				
+				for(var i = start; i<end; i++){
+					item = $_data2[i];
+					var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${item.sort}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick}</span>
+        				    <span>${item.activityRegister.lotteryCount}</span>
+        				</li>`;
+						$("#lists1").append(moreHtml);
+				}
+				
+				$_pages[1] = p+1;
+			}
+			
+			//城市月排行榜
+			function showPageMonth(page){
+				var p = $_pages[2]; //显示当前页面
+				var total = $_data3.length; //总记录数
+				var c = parseInt(total/$_per);//总页数
+				var start = (p-1)*$_per;
+				var end = p*$_per>=total?total:p*$_per; //正常计算分页最大值
+				
+				console.log("total res: "+ total);
+				console.log("total page: "+ c);
+				
+				for(var i = start; i<end; i++){
+					item = $_data3[i];
+					var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${item.sort}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick}</span>
+        				    <span>${item.activityRegister.lotteryCount}</span>
+        				</li>`;
+						$("#lists2").append(moreHtml);
+				}
+				
+				$_pages[2] = p+1;
+			}*/
+
+			/*****模拟数据测试****/
+			var rep1 = 0,
+				rep2 = 0,
+				rep3 = 0; //重复读取次数
+			//全国排行榜分页增加
+			function showPageCounty() {
+
+				var total = $_data1.length; //总记录数
+				console.log("the page is: " + parseInt($_pages[0]) > 1);
+				if( (total < $_per && parseInt($_pages[0]) > 1) || (total==0 && parseInt($_pages[0])==1)) {
+					layer.open({
+						content: '没有更多数据了',
+						skin: 'msg',
+						time: 2 //2秒后自动关闭
+					});
+					return false;
+				}
+
+				var c = parseInt(total / $_per); //总页数
+
+				//console.log("the true page:"+$_pages[0]);
+				var p = $_pages[0] - rep1 * c; //显示当前页面
+				//console.log("the show page:"+p);
+
+				var start = (p - 1) * $_per;
+				var end = (p * $_per - 1) >= total - 1 ? total - 1 : (p * $_per - 1); //正常计算分页最索引
+
+				//console.log("start res: "+ start);
+				//console.log("end page: "+ end);
+
+				if(rep1 == 0) { //第一轮正常加载
+					//加载数据
+					for(var i = start; i <= end; i++) {
+						item = $_data1[i];
+						var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${i+1}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick}</span>
+        				    <span>${parseInt(item.score)}</span>
+        				</li>`;
+						$("#lists0").append(moreHtml);
+					}
+				} else { //以后数据都进行复制
+					//加载数据
+					for(var i = start; i <= end; i++) {
+						item = $_data1[i];
+						var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${rep1*$_per*c+i+1}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick+rep1}</span>
+        				    <span>1</span>
+        				</li>`;
+						$("#lists0").append(moreHtml);
+					}
+				}
+
+				if(p == c) {
+					rep1 = rep1 + 1;
+				}
+				$_pages[0] = $_pages[0] + 1;
+
+			}
+
+			//城市排行榜分页增加
+			function showPageCity() {
+
+				var total = $_data2.length; //总记录数，演示，还是采用全国排行榜数据，要不然可能是空的
+				if( (total < $_per && parseInt($_pages[1]) > 1) || (total==0 && parseInt($_pages[1])==1)) {
+					layer.open({
+						content: '没有更多数据了',
+						skin: 'msg',
+						time: 2 //2秒后自动关闭
+					});
+					return false;
+				}
+				var c = parseInt(total / $_per); //总页数
+
+				//console.log("the true page:"+$_pages[1]);
+				var p = $_pages[1] - rep2 * c; //显示当前页面
+				//console.log("the show page:"+p);
+
+				var start = (p - 1) * $_per;
+				var end = (p * $_per - 1) >= total - 1 ? total - 1 : (p * $_per - 1); //正常计算分页最索引
+
+				//console.log("start res: "+ start);
+				//console.log("end page: "+ end);
+
+				if(rep2 == 0) { //第一轮正常加载
+					//加载数据
+					for(var i = start; i <= end; i++) {
+						item = $_data2[i];
+						var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${i+1}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick}</span>
+        				    <span>${item.activityRegister.lotteryCount}</span>
+        				</li>`;
+						$("#lists1").append(moreHtml);
+					}
+				} else { //以后数据都进行复制
+					//加载数据
+					for(var i = start; i <= end; i++) {
+						item = $_data2[i];
+						var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${rep2*$_per*c+i+1}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick+rep2}</span>
+        				    <span>1</span>
+        				</li>`;
+						$("#lists1").append(moreHtml);
+					}
+				}
+
+				if(p == c) {
+					rep2 = rep2 + 1;
+				}
+				$_pages[1] = $_pages[1] + 1;
+			}
+
+			//城市月排行榜
+			function showPageMonth() {
+
+				var total = $_data3.length; //总记录数，演示，还是采用全国排行榜数据，要不然可能是空的
+
+				if( (total < $_per && parseInt($_pages[2]) > 1) || (total==0 && parseInt($_pages[2])==1)) {
+					layer.open({
+						content: '没有更多数据了',
+						skin: 'msg',
+						time: 2 //2秒后自动关闭
+					});
+					return false;
+				}
+
+				var c = parseInt(total / $_per); //总页数
+
+				//console.log("the true page:"+$_pages[0]);
+				var p = $_pages[2] - rep3 * c; //显示当前页面
+				//console.log("the show page:"+p);
+
+				var start = (p - 1) * $_per;
+				var end = (p * $_per - 1) >= total - 1 ? total - 1 : (p * $_per - 1); //正常计算分页最索引
+
+				//console.log("start res: "+ start);
+				//console.log("end page: "+ end);
+
+				if(rep3 == 0) { //第一轮正常加载
+					//加载数据
+					for(var i = start; i <= end; i++) {
+						item = $_data3[i];
+						var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${i+1}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick}</span>
+        				    <span>${item.activityRegister.lotteryCount}</span>
+        				</li>`;
+						$("#lists2").append(moreHtml);
+					}
+				} else { //以后数据都进行复制
+					//加载数据
+					for(var i = start; i <= end; i++) {
+						item = $_data3[i];
+						var moreHtml = '';
+						moreHtml = `<li>
+        					<span>第${rep3*$_per*c+i+1}名</span>
+        				    <span><img class="uheader" src="${item.activityRegister.wxHeadUrl}" /></span>
+        				    <span>${item.activityRegister.wxNick+rep3}</span>
+        				    <span>1</span>
+        				</li>`;
+						$("#lists2").append(moreHtml);
+					}
+				}
+
+				if(p == c) {
+					rep3 = rep3 + 1;
+				}
+				$_pages[2] = $_pages[2] + 1;
+			}
+		</script>
+
+	</body>
+
+</html>

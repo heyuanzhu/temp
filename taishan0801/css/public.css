@@ -1,0 +1,128 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin: 0;padding: 0;}
+body{font-size:12px;}
+pre,xmp,plaintext,listing{white-space:normal;}
+article,aside,dialog,figure,footer,header,hgroup,nav,section,select,time{display:block;}
+h1,h2,h3,h4,h5,h6,input,textarea,select,button,label,address,caption,cite,code,em,strong,var{font-weight:normal;font-style:normal;}
+i{font-style:normal;}
+ul,dl,ol,li,dt,dd{list-style:none;}
+img,fieldset,input[type="submit"]{border:none;}
+input{-webkit-appearance:none;}
+input,textarea,select{border:none;outline:none;-webkit-tap-highlight-color:rgba(255,255,255,0); background:#fff;}
+a{color:#7A7A7A;text-decoration:none;-webkit-transition:color 0.3s ease-in-out;transition:color 0.3s ease-in-out;}
+a:hover{color:#f85d4f;text-decoration:none;}
+a:active{-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
+body{-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(0,0,0,0.05);/* 设置点击链接时遮罩层为全透明 */
+background:#fff;}
+html,body{-webkit-text-size-adjust:none;width:100%;height: 100%;}/* 设置webkit内核下文字大小不小于12px */
+a,button,input{-webkit-touch-callout:none;outline:none;}/* 禁止长按链接、按钮、输入框出现系统默认弹框菜单 */
+a,a:visited{text-decoration:none;-webkit-touch-callout:none;}
+
+.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0;}
+.clearfix:before,.clearfix:after {content:" ";display:block;overflow:hidden;visibility:hidden;width:0;height:0;clear:both;}
+.none{ display: none;}
+
+/* sjf */
+html{font-size: 62.5%;}
+html,body{width:100%;height: 100%;}
+li{list-style-type:none;}
+img{border:0;}
+
+/* 底部logo电话 */
+.bot{
+    width:100%;
+    height:167px;
+    background:url("../images/b_bg.png") no-repeat bottom center;
+    background-size: 100% 100%;
+    position: absolute;
+    bottom: 0;
+    left:0;
+}
+.bot .img-container{
+    width:645px;
+    margin:77px auto 0;
+    overflow: hidden;
+}
+.bot .img-container img:first-child{
+    float: left;
+}
+.bot .img-container img:last-child{
+    float: right;
+}
+
+
+/* 下拉加载更多   */
+.dropload-up,.dropload-down{
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    font-size: 12px;
+    /* 开启硬件加速 */
+    -webkit-transform:translateZ(0);
+    transform:translateZ(0);
+}
+.dropload-down{
+    height: 50px;
+}
+.dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+.dropload-load .loading{
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    margin: 6px;
+    border: 2px solid #666;
+    border-bottom-color: transparent;
+    vertical-align: middle;
+    -webkit-animation: rotate 0.75s linear infinite;
+    animation: rotate 0.75s linear infinite;
+}
+
+/*   通用组件样式    */
+#defAlert {
+  background: #333;
+  text-align: center;
+  font-family: "微软雅黑";
+  display: none;
+  position: fixed;
+  color: #fff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius:6px;
+  opacity: 0.9;
+  -moz-opacity: 0.9;
+  z-index: 1200;
+  font-size:30px;
+}
+#defAlert div {
+  padding: 20px 30px;
+}
+
+
+@-webkit-keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

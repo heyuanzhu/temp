@@ -1,0 +1,181 @@
+<!DOCTYPE html><html id="all"><head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=640,user-scalable=no">
+  	<meta content="telephone=no" name="format-detection">
+	<link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+	<link rel="stylesheet" type="text/css" href="./css/loging.css?v=version">
+
+	<script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+
+	<!-- 地理位置获取 -->
+	<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+
+
+	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.extends.js?v=version"></script>
+
+	<script type="text/javascript" src="./js/ys.js?v=version"></script>
+	<script type="text/javascript" src="js/asia.js?v=version"></script>
+	
+	<!--
+	<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=20180112105113"></script>
+	-->
+	<title name="首页"></title>
+
+</head>
+<body marginwidth="0" marginheight="0">
+	<input id="activityId" type="hidden" value="">
+	<input id="tipsWords" links-editor="links-editor-text-content" links-editor-title="未获取到GPS的弹窗提示文案" type="hidden" value="未获取到位置信息，请检查定位服务 是否开启或换个位置试试看" />
+	<div class="logoing">
+
+	</div>
+
+	<div class="logoing"></div>
+	<input id="indexHtml" type="hidden" value="1">
+	
+    <script src="js/layer/layer.js"></script>
+	<script>
+		$(document).ready(function(){
+			if (isFrame()) {
+				return;//activity-utils.js
+			}
+			var code = getParam("code");
+			
+			/*setTimeout(function(){
+				window.location.reload;
+			},8000);*/
+
+			var isFail = false;
+			weixinConfig({
+				debug:false,
+				getLocation:true,
+				loopLocation : true,
+				/*getLocationFail:function(msg){
+					alert('请在设置中设置微信获取位置权限');
+					//isFail = true;
+				}*/
+			});
+			
+			var checkTimer = null;
+			var getPosition = false;
+			checkLocation(new Date().getTime());
+
+			function checkLocation(time) {
+				if(getPosition) return;
+				$.activity.getLocation({
+					sucFunc: function(datas) {
+						console.log("-----GPS------");
+						console.log(datas);
+
+						var longitude = datas.longitude;
+						var latitude = datas.latitude;
+
+						if(longitude && latitude) {
+							getPosition = true;
+							clearInterval(checkTimer);
+							checkCode();
+						}
+
+						if(longitude == null || latitude == null){
+							//地理位置获取中或者地理位置已经获取失败
+
+							var timeCost = new Date().getTime() - time;
+							if(timeCost > 5000){
+								//alert('请检查定位服务功能是否开启或换个位置试试看');
+								//超过6秒任然未获取到地理位置
+								layer.open({
+									content: ''+$('#tipsWords').val()+'',
+									btn: ['确定'],
+                                    yes: function(index){
+                                    	layer.closeAll();
+                                        window.location.reload();
+                                    }
+								});
+							}else{
+								checkTimer = setTimeout(function(){
+								   checkLocation(time);//重新检查
+								   return;
+							    },1000);
+							}
+
+						}
+
+					},
+					errFunc: function(message, code, datas) {
+						layer.open({
+							content: ''+message+'',
+							btn: ['确定'],
+                            yes: function(index){
+                            	layer.closeAll();
+                                window.location.reload();
+                            }
+						});
+					}
+
+				});
+			}
+		
+	
+			//console.log(code);
+
+			function checkCode(){
+				if(code){
+					$.activity.validate({
+						data : {
+							activityEntryCode : 'lottery',//动作代号
+							code : getParam("code")
+						},
+						sucFunc : function(datas){
+							//console.log(datas);
+							//initailBtn();
+							location.href = 'lottery.html?code=' + code;
+
+						},
+						errFunc : function(msg,errorCode,datas){
+							//错误提示
+							/*var errorCodes = {
+								'E00603111':'您的二维码已经被扫过了',//串码使用次数已达上限
+								'E00603112':'您的二维码已经被扫过了'//串码已经被使用
+							};*/
+
+							/*var errorCodes = {
+								'E00603111':'您的二维码已经被扫过了',//串码使用次数已达上限
+								'E00603112':'您的二维码已经被扫过了', //串码已经被使用
+								'E00603113':'您参与次数已达上限', //消费者参与次数已达上限
+								'E00608026':'亲，此二维码已关闭。产品过期后，瓶盖二维码随即关闭哦。',
+								'E00603114':'<p>每日每人最多参与'+(datas.lotteryCountDayLimit || 1)+'次</p><p>请明天再来哦~</p>' //消费者当天参与次数已达上限
+							};*/
+
+
+							params = '&errorCode='+errorCode + '&msg=' + escape(msg);
+							//if(datas.firstTime) params = params + '&firstTime='+datas.firstTime;
+							location.href='notBegin.html?v=20180112105113' + params;
+								//return;
+
+
+							//initailBtn();
+						},
+						error : function(e){
+							//initailBtn();
+						}
+					});
+				}
+			}
+
+			
+
+		});
+
+
+
+
+	</script>
+
+
+</body></html>

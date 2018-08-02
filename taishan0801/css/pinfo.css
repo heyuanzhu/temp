@@ -1,0 +1,11 @@
+.container{
+    background-color: #f4f4f4;
+}
+.list li:nth-child(1){
+    border-bottom:0;
+}
+.list li:nth-child(2){
+    border-top:1px solid #ddddde;
+}
+
+.list li .right .headpic img{margin-top: 4px;}

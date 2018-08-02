@@ -1,0 +1,225 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=yes">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/myIntegral.css?v=version">
+
+    <script type="text/javascript" src="./js/jquery-1.9.1.min.js?v=version"></script>
+	<script type="text/javascript" src="./js/jquery.eraser.js?v=version"></script>
+	<script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+
+	<script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.js?v=version"></script>
+	<script type="text/javascript" src="../js/activity/jquery.validate.extends.js?v=version"></script>
+
+	<script type="text/javascript" src="./js/ys.js?v=version"></script>
+	<script type="text/javascript" src="js/asia.js?v=version"></script>
+	<script type="text/javascript" src="js/ysk-gps-location-circle.js?v=version"></script>
+  <style>
+  .jf-list{height: 863px;webkit-overflow-scrolling: touch; overflow-y: scroll;  }
+      .more{width:100%;font-size:24px;text-align: center; margin-top:30px;}
+      .none{ display: none;}
+  </style>
+    <title name="我的积分"></title>
+    <script type="text/javascript">
+        $(function () {
+            if (isFrame()) return;//activity-utils.js
+            //$.activity.settings.devModel = true;
+
+            //var myscroll = null;
+            //var html = '';
+            //var onoff = 0;
+            var page = {
+                currentPage : 1,
+                totalPage   : 3,
+                showCount   : 7,
+                totalCount  : 18
+            };
+
+            if (top.location == location) {
+                $('.prize-list__ul').html('');//清空列表
+                loadDetail(1);
+            }
+
+            //alert($('.jf-list').height());
+
+          //  console.log($('.jf-list')[0].scrollHeight - $('.jf-list').height());
+            //var page = 1;
+            //var html = '<li><div class="left"><img src="./images/integral_icon.png" /></div><div class="middle"><div class="top">100积分</div><div class="bottom">中奖时间：2015.12.12</div></div><div class="right"><a href="#">进入积分商城</a></div></li>';
+
+            var flag = false;
+            //console.log($('.jf-list')[0].scrollHeight - $('.jf-list').height());
+            $('.jf-list').on('scroll',function(){
+              if(flag){
+                return false;
+              }
+              var bottomH = $('.jf-list')[0].scrollHeight - $('.jf-list').height();  //底部的距离
+              var jl = bottomH - 100;  //距离底部距离
+              if($('.jf-list').scrollTop() >= jl){
+                  flag = true;
+                  page.currentPage++;
+                  console.log('开始加载');
+                  $('.more').show();
+                  loadDetail(page.currentPage);
+                  setTimeout(function(){
+                    $('.more').hide();
+                  },1000);
+              }
+
+            });
+
+
+            /** 加载明细 */
+            function loadDetail(currentPage){
+                //积分账户明细列表
+                $.activity.loadJfDetail({
+                    data : {
+                        'page.currentPage':currentPage,
+                        'page.showCount':page.showCount
+                    },
+                    sucFunc : function(datas){
+                        //查询成功
+                        var totalPage = datas.page.totalResult / page.showCount;
+                        console.log(datas);
+                        var html = '';
+                        var list = datas.page.list;
+                        if(list && list.length>0){
+                            $(list).each(function(i,k){
+                                html +=  '<li>' +
+                                            '<div class="left"><img src="./images/integral_icon.png" /></div>' +
+                                            '<div class="middle">' +
+                                                '<div class="top">'+  k.amount + '积分</div>' +
+                                                '<div class="bottom">'+ k.createTime  +'</div>' +
+                                            '</div>' +
+                                            '<div class="right"><a href="http://1kx.me/j/dr">进入积分商城</a></div>' +
+                                        '</li>';
+
+                            });
+
+                            //initLoadMore(datas);
+                            $('.prize-list__ul').append(html);
+                            flag = false;
+                            if(datas.page.currentPage > totalPage){
+                              $('.more').html('没有更多数据~');
+                              return false;
+                            }
+
+                        }else if(currentPage == 1){
+
+                        }else{
+                          $('.more').html('暂无数据').show();
+                        }
+
+                    },
+                    complete : function(){
+                      //  if(myscroll) myscroll.refresh();
+                    }
+                });
+
+
+
+            }
+
+        });
+    </script>
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="781">
+<div class="container" style="overflow: visible;">
+    <div class="con my-integral">
+        <div class="outer">
+        	<div class="scroll-container scroller">
+                <div class="jf-list" id="test">
+                    <ul class="prize-list__ul">
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                        <li>
+                            <div class="left"><img src="./images/integral_icon.png"></div>
+                            <div class="middle">
+                                <div class="top">100积分</div>
+                                <div class="bottom">中奖时间：2015.12.12</div>
+                            </div>
+                            <div class="right"><a href="#">进入积分商城</a></div>
+                        </li>
+                    </ul>
+                </div>
+
+	            <!--<div class="more"><i class="pull_icon"></i><span>上拉加载更多</span></div>-->
+              <div class="more none">加载中...</div>
+
+        	</div>
+
+        </div>
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body></html>

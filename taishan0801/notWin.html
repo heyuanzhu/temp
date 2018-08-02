@@ -1,0 +1,65 @@
+<!DOCTYPE html><html id="all"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750,user-scalable=yes">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="./css/public.css?v=version">
+    <link rel="stylesheet" type="text/css" href="./css/missPrize.css?v=version">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js?v=version"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js?v=version"></script>
+    <script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="//map.qq.com/api/js?v=2.exp&amp;key=K67BZ-RNCWP-4E6DV-LSART-G6QRK-5FFPQ" charset="utf-8"></script>
+  	<script type="text/javascript" src="../js/activity/activity-host.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-dev-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/activity-utils-1.0.0.js?v=version"></script>
+  	<script type="text/javascript" src="../js/activity/weixin-utils-1.0.1.js?v=version"></script>
+    <title name="未中奖"></title>
+    <script>
+      $(document).ready(function(){
+        if(isFrame()) return;
+				/*var errorCode = getParam('errorCode');
+        var msg = getParam('msg');
+				var errorCodes = {
+						'E00603111':'您的二维码已经被扫过了',//串码使用次数已达上限
+						'E00603112':'您的二维码已经被扫过了', //串码已经被使用
+						'E00603113':'您参与次数已达上限', //消费者参与次数已达上限
+            'E00608026':'亲，此二维码已关闭。产品过期后，瓶盖二维码随即关闭哦。',
+						/*'E00603114':'每日每人最多参与'+(dayLimit || 1)+'次', //消费者当天参与次数已达上限
+						'noprize'  :'未中奖'
+					};
+
+        if(errorCodes[errorCode]){
+          $('#reson').html(errorCodes[errorCode]);
+        }
+        else{
+            $('#reson').html(msg);
+        }
+        */
+      });
+    </script>
+</head>
+<body marginwidth="0" marginheight="0">
+<input id="activityId" type="hidden" value="781">
+<div class="container">
+    <div class="con miss-prize">
+        <div class="outer">
+            <div class="main-con">
+                <img src="./images/miss_prize.png">
+                <p id="result">中奖的消费者请去个人中心领取红包哦</p>
+            </div>
+            <div class="main-bottom">
+                <img class="qrcode" src="./images/demo_qrcode1.jpg">
+                <img class="arrow-icon" src="./images/code_arrow.png">
+            </div>
+        </div>
+        <div class="bot">
+            <div class="img-container">
+                <img src="./images/b_icon1.png">
+                <img src="./images/b_icon2.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body></html>

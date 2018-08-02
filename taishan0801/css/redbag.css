@@ -1,0 +1,128 @@
+.container{
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background: #FFFFFF;
+	background:#af4a2e;
+}
+.top_warp{
+	height: 347px;
+	width: 750px;
+	background: url(../images/ts_bg12_02.png) no-repeat;
+	overflow: hidden;
+}
+.center_body{
+	width: 750px;
+	min-height: 693px;
+	background:#af4a2e;
+	position: relative;
+}
+
+.ul_permsg li:first-child{margin-top: 30px;text-align: center;font-size: 102px;color: #813b0b;}
+.ul_permsg li:last-child{text-align: center;font-size: 26px;font-weight: 700;color: #fd9b00;}
+.redbagrap{
+	width: 100%;
+	min-height: 200px;
+	position: absolute;
+	top: -95px;
+}
+.tslb{
+	height: 30px;
+	font-size: 20px;
+	padding-left: 50px;
+	background: url(../images/laba_03.png) no-repeat left;
+	line-height: 30px;
+	width: 650px;
+	margin: auto;
+	color: #FFFFFF;
+}
+.warpredbg{
+	width: 615px;
+	min-height: 484px;
+	background: #FFFFFF;
+	border-radius: 10px;
+	margin: 10px auto 0;
+}
+.tit_tx{
+	height: 69px;
+	border-bottom: 1px solid #CCCCCC;
+	line-height: 69px;
+	text-align: center;
+	color: #813b0b;
+	font-size: 26px;
+}
+.inp_redbg{
+	height: 266px;
+	width: 302px;
+	background: url(../images/redbagm_03.png) no-repeat;
+	margin: 20px auto ;
+	overflow: hidden;
+}
+.inp_rebg{
+	font-size: 118px;
+	text-align: center;
+	color: #813b0b;
+	display: block;
+    width: 211px;
+    background: none;
+    margin: 110px auto 0;
+}
+.asia_dl{
+	width: 80%;
+	margin: 20px auto 0;
+	font-size: 20px;
+	color: #813b0b;
+	position: relative;
+	overflow: hidden;
+}
+.asia_dl dt{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+.asia_dl dd{
+	float: left;
+	margin-left: 60px;
+}
+.btn_anniu{
+	overflow: hidden;
+	width: 525px;
+	margin: 40px auto 0;
+}
+.btnmslq{
+	float: left;
+	background: url(../images/msbtnbg_07.png) no-repeat;
+	height: 71px;
+	width: 213px;
+}
+.redbgmx{
+	float: right;
+	background: url(../images/remxbtn_09.png) no-repeat;
+	height: 71px;
+	width: 213px;
+}
+.bottom_foot{
+	height: 86px;
+	background: #fec700 url(../images/tslogo_15.png) no-repeat 60px 14px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+}
+.footlu{
+	float: right;
+	margin-top: 16px;
+	margin-right: 60px;
+	text-align: center;
+}
+.footlu li:first-child{
+	font-size: 28px;
+	font-weight: 900;
+	color: #FFFFFF;
+	letter-spacing: 2px;
+}
+.footlu li:last-child{
+	font-size: 18px;
+	color: #FFFFFF;
+	letter-spacing: 4px;
+}

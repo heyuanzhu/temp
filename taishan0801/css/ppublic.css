@@ -1,0 +1,173 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin: 0;padding: 0;}
+body{font-size:12px;}
+pre,xmp,plaintext,listing{white-space:normal;}
+article,aside,dialog,figure,footer,header,hgroup,nav,section,select,time{display:block;}
+h1,h2,h3,h4,h5,h6,input,textarea,select,button,label,address,caption,cite,code,em,strong,var{font-weight:normal;font-style:normal;}
+i{font-style:normal;}
+ul,dl,ol,li,dt,dd{list-style:none;}
+img,fieldset,input[type="submit"]{border:none;}
+input{-webkit-appearance:none;}
+input,textarea,select{border:none;outline:none;-webkit-tap-highlight-color:rgba(255,255,255,0); background:#fff;}
+a{color:#7A7A7A;text-decoration:none;-webkit-transition:color 0.3s ease-in-out;transition:color 0.3s ease-in-out;}
+a:hover{color:#f85d4f;text-decoration:none;}
+a:active{-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
+body{-webkit-user-select:none;/* 禁止选中文本 */-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(0,0,0,0.05);/* 设置点击链接时遮罩层为全透明 */
+    background:#fff;}
+html,body{-webkit-text-size-adjust:none;width:100%;height: 100%;}/* 设置webkit内核下文字大小不小于12px */
+a,button,input{-webkit-touch-callout:none;outline:none;}/* 禁止长按链接、按钮、输入框出现系统默认弹框菜单 */
+a,a:visited{text-decoration:none;-webkit-touch-callout:none;}
+
+.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0;}
+.clearfix:before,.clearfix:after {content:" ";display:block;overflow:hidden;visibility:hidden;width:0;height:0;clear:both;}
+
+
+/* sjf */
+html{/*font-size: 62.5%;*/}
+html,body{width:100%;height: 100%;}
+li{list-style-type:none;}
+img{border:0;}
+.container{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+/* 个人信息 个人中心 list*/
+.list{
+    width:750px;
+    margin-top:30px;
+    background-color: #fff;
+}
+.list li{
+    width:690px;
+    height:100px;
+    line-height: 100px;
+    border-bottom:1px solid #ddddde;
+    overflow: hidden;
+    padding-right:30px;
+    margin-left:15px;
+    font-size:28px;
+    color: #333333;
+}
+.list li a{
+    color: #333333;
+    display: block;
+    overflow: hidden;
+}
+.list li:nth-child(1),.list li:last-child{
+   /* width:690px;
+    margin-left:0;
+    padding-left:30px;*/
+}
+.list li:nth-child(1){
+   /* height:128px;
+    line-height:128px;
+    border-top:1px solid #ddddde;*/
+}
+.list li .left{
+    float:left;
+}
+.list li .right{
+    float: right;
+    overflow: hidden;
+}
+.list li .right .headpic{
+    height:100%;
+}
+.list li .right .headpic img{
+    margin-top:18px;
+    border-radius: 50%;
+    height: 92px;
+    width: 92px;
+}
+.list li .right .field{
+    float: left;
+}
+.list li .right .icon{
+    float: right;
+    margin-left:25px;
+}
+.list li .right .icon img{
+    margin-top:37px;
+}
+
+.powerby{
+    width:100%;
+    position: absolute;
+    bottom:115px;
+    left:0;
+}
+.powerby p{
+    font-size:26px;
+    text-align: center;
+    color: #999999;
+}
+
+
+/*错误提示样式*/
+.wrongmsg{
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height:  70px;
+	/*background: #CCCCCC;*/
+	border-radius: 5px;
+	line-height: 70px;
+	padding: 5px;
+	text-align: center;
+	color: #fff;
+	font-size: 28px;
+}
+.wrongmsg span{
+	background: url(../images/runbg.png);
+	padding: 25px;
+	border-radius: 5px;
+}
+
+/*   通用组件样式    */
+#defAlert{
+    background: #333;
+    text-align: center;
+    font-family: "微软雅黑";
+    display: none;
+    position: fixed;
+    color: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    opacity: 0.9;
+    -moz-opacity: 0.9;
+    z-index: 1200;
+    font-size: 30px;
+}
+
+#defAlert div{padding:20px 30px}
+
+
+/*   loading    */
+#loading{ width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999999999;
+    text-align: center;}
+#loading .spinner{ margin: 60% auto 0;
+    width: 150px;
+    -webkit-animation: myfirst 10s 0s linear infinite;  /* Safari 和 Chrome */
+    text-align: center;
+    }
+#loading img{width: 72px;}    
+
+@-webkit-keyframes myfirst 
+{
+from {-webkit-transform: rotate(0deg);}
+to {-webkit-transform: rotate(360deg);
+}

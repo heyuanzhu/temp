@@ -1,0 +1,71 @@
+.container{
+    background-color: #f4f4f4;
+}
+.pgender{
+
+}
+.genderlist{
+    margin-top:30px;
+    border-top:1px solid #ddddde;
+    border-bottom:1px solid #ddddde;
+    background-color:#fff;
+}
+.genderlist li{
+    width:690px;
+    margin-left:30px;
+    padding-right:30px;
+}
+.genderlist li:nth-child(1){
+    border-bottom:1px solid #ddddde;
+}
+.genderlist li:last-child{
+    padding-left: 30px;
+    margin-left: 0;
+}
+.genderlist li input{
+    display: none;
+}
+.genderlist li label{
+    font-size:28px;
+    display: block;
+    height:100px;
+    line-height: 100px;
+    color:#333333;
+    overflow: hidden;
+}
+.genderlist li label .l-txt{
+    float: left;
+}
+.genderlist li label .right-icon{
+    float: right;
+    display: block;
+    width:40px;
+    height:40px;
+    border:2px solid #c9c9c9;
+    background-color: #fff;
+    border-radius:50%;
+    margin-top:28px;
+    /*background-image:url(../images/);*/
+    background-repeat:no-repeat;
+}
+.genderlist li input:checked~label .right-icon{
+    width:44px;
+    height:44px;
+    background-image:url(../images/genderchecked.png);
+    /*border-radius:0;*/
+    border:0;
+}
+.sub{
+    margin-top:60px;
+}
+.sub button{
+    width:690px;
+    display: block;
+    border-radius:8px;
+    margin:0 auto;
+    border:0;
+    font-size:36px;
+    color:#fff;
+    height:98px;
+    background-color: #4592f0;
+}
